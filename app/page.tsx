@@ -166,7 +166,7 @@ export const metadata: Metadata = {
 	description:
 		'Cyril Yamoah is a frontend developer specializing in building scalable, user-centric solutions using Next.js, React, and TypeScript. Explore his portfolio, skills, and professional experience in the real estate industry.',
 	keywords:
-		'Cyril Yamoah, Frontend Developer, Next.js, React, TypeScript, Portfolio, Real Estate, Web Development, JavaScript, Redux, Tailwind',
+		'Cyril Yamoah, Frontend Developer, Next.js, React, TypeScript, Portfolio, Real Estate, Web Development, JavaScript, Redux, Tailwind, Software',
 	icons: {
 		icon: [{ url: '/favicon.ico', sizes: 'any' }],
 		apple: [{ url: '/apple-touch-icon', sizes: 'any' }],
@@ -184,6 +184,7 @@ export const metadata: Metadata = {
 				alt: 'Cyril Yamoah - Frontend Developer',
 			},
 		],
+		url: 'https://cyrilyamoah.vercel.app',
 	},
 	twitter: {
 		card: 'summary_large_image',
@@ -200,4 +201,6 @@ export const metadata: Metadata = {
 	verification: {
 		google: process.env.NEXT_PUBLIC_GOOGLE_TAG,
 	},
+	robots: 'index, follow',
+	metadataBase: new URL('https://cyrilyamoah.vercel.app/'),
 };
