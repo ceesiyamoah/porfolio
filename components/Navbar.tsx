@@ -5,7 +5,7 @@ import Link from 'next/link';
 
 const Navbar = () => {
 	return (
-		<nav className='p-4 md:px-32 flex items-center w-full justify-between  backdrop-blur-lg sticky top-0 z-10  bg-[foreground] '>
+		<nav className='p-4 md:px-40 flex items-center w-full justify-between  backdrop-blur-sm sticky top-0 z-10  bg-[foreground] '>
 			<h1 className='text-2xl font-bold  text-center'>CYRIL YAMOAH</h1>
 			<div className=' items-center gap-4 p-2 hidden md:flex'>
 				{navlinks.map((item) => (
