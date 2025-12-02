@@ -80,7 +80,7 @@ export default function Home() {
 						'@context': 'https://schema.org',
 						'@type': 'Person',
 						name: 'Cyril Yamoah',
-						url: 'https://portfolio.cyrilyamoah.app',
+						url: 'https://portfolio.cyrilyamoah.com',
 						image: '/logo.png',
 						jobTitle: 'Frontend Developer',
 						worksFor: {
@@ -341,7 +341,7 @@ export const metadata: Metadata = {
 		'React portfolio',
 		'Developer showcase',
 	],
-	authors: [{ name: 'Cyril Yamoah', url: 'https://portfolio.cyrilyamoah.app' }],
+	authors: [{ name: 'Cyril Yamoah', url: 'https://portfolio.cyrilyamoah.com' }],
 	creator: 'Cyril Yamoah',
 	publisher: 'Cyril Yamoah',
 	formatDetection: {
@@ -371,7 +371,7 @@ export const metadata: Metadata = {
 	openGraph: {
 		type: 'website',
 		locale: 'en_US',
-		url: 'https://portfolio.cyrilyamoah.app',
+		url: 'https://portfolio.cyrilyamoah.com',
 		siteName: 'Cyril Yamoah - Frontend Developer Portfolio',
 		title: 'Cyril Yamoah - Expert Frontend Developer | React, Next.js & TypeScript',
 		description:
@@ -408,14 +408,14 @@ export const metadata: Metadata = {
 		},
 	},
 	alternates: {
-		canonical: 'https://portfolio.cyrilyamoah.app',
+		canonical: 'https://portfolio.cyrilyamoah.com',
 	},
 	verification: {
 		google: 'KwN1HnFyo_kPeFkSozTVQ3qUsVLC033RLyrt-2fIFMI',
 	},
 	category: 'Technology',
 	classification: 'Web Development Portfolio',
-	metadataBase: new URL('https://portfolio.cyrilyamoah.app/'),
+	metadataBase: new URL('https://portfolio.cyrilyamoah.com/'),
 	other: {
 		'og:phone_number': '+233204612277',
 		'og:email': 'ccyamoah@gmail.com',
