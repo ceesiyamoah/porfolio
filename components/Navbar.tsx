@@ -5,11 +5,17 @@ import Link from 'next/link';
 
 const Navbar = () => {
 	return (
-		<nav className='p-4 md:px-40 flex items-center w-full justify-between  backdrop-blur-sm sticky top-0 z-10  bg-[foreground] '>
-			<h1 className='text-2xl font-bold  text-center'>CYRIL YAMOAH</h1>
-			<div className=' items-center gap-4 p-2 hidden md:flex'>
+		<nav className='p-4 md:px-40 flex items-center w-full justify-between backdrop-blur-md sticky top-0 z-50 border-b border-[var(--muted)] bg-[var(--background)]/90'>
+			<h1 className='text-lg font-medium'>
+				CY
+			</h1>
+			<div className='items-center gap-8 hidden md:flex'>
 				{navlinks.map((item) => (
-					<Link href={item.href} key={item.href} className='w-full rounded-lg p-2 text-center'>
+					<Link 
+						href={item.href} 
+						key={item.href} 
+						className='text-sm hover:text-[var(--accent)] transition-colors'
+					>
 						{item.label}
 					</Link>
 				))}

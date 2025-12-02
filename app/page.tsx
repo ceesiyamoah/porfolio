@@ -69,95 +69,130 @@ const contactLinks = [
 
 export default function Home() {
 	return (
-		<div className='size-full'>
+		<div className='size-full relative'>
 			<Navbar />
-			<div className='p-4 md:px-40 space-y-12'>
-				<div className='space-y-4 lg:w-2/3 text md:text-left' id='about'>
-					<div className='space-y-4'>
-						<h1 className='text-xl md:text-5xl font-bold'>Cyril Yamoah, Frontend Developer</h1>
-						<h2 className='text-lg md:text-2xl font-semibold '>
-							Building Scalable, User-Centric Solutions that Drive Business Growth and Enhance User Engagement
-						</h2>
-					</div>
-					<p className=''>
-						A software developer specialized in Frontend Development. using nextjs and react to solve problems,
-						currently in the real estate industry
+			
+			{/* Hero Section - Simple & Clean */}
+			<section className='py-24 md:py-32 px-4 md:px-40' id='about'>
+				<div className='max-w-4xl'>
+					<h1 className='text-5xl md:text-7xl font-light font-[family-name:var(--font-newsreader)] mb-6 leading-tight'>
+						Cyril Yamoah
+					</h1>
+					<p className='text-xl md:text-2xl text-[var(--accent)] mb-8 font-medium'>
+						Frontend Developer
 					</p>
-				</div>
-
-				<div className='space-y-4 lg:w-2/3' id='experience'>
-					<h2 className='text-xl md:text-3xl font-bold '>Experience</h2>
-					<div className='border-l space-y-4 relative border-dashed p-4'>
-						{experience.map((exp, ind) => (
-							<p
-								className={`relative flex flex-col ${
-									ind !== experience.length - 1
-										? 'before:block before:absolute before:bg-white before:w-20 before:h-[1px] before:-bottom-2 before:-left-4'
-										: ''
-								}`}
-								key={exp.company}
+					<p className='text-lg md:text-xl leading-relaxed mb-12 opacity-80 max-w-2xl'>
+						Building scalable, user-centric digital solutions with React, Next.js, and TypeScript. 
+						Currently crafting experiences in the real estate industry.
+					</p>
+					<div className='flex gap-6'>
+						{contactLinks.map((link) => (
+							<Link 
+								href={link.url} 
+								className='w-12 h-12 flex items-center justify-center border border-[var(--muted)] hover:border-[var(--accent)] transition-colors' 
+								key={link.url}
+								aria-label={link.url.includes('github') ? 'GitHub' : link.url.includes('linkedin') ? 'LinkedIn' : 'Email'}
 							>
-								<span className='text-lg'>
-									{exp.position} @ <span className='font-black '>{exp.company}</span>
-								</span>{' '}
-								<span className='text-sm'>{exp.date}</span>
-							</p>
+								{link.icon}
+							</Link>
 						))}
 					</div>
 				</div>
+			</section>
 
-				<div className='space-y-4 lg:w-2/3' id='skills'>
-					<h2 className='text-xl md:text-3xl font-bold'>Skills</h2>
-					<ul className='grid grid-cols-4 gap-4'>
-						{skills.map((skill) => (
-							<li key={skill} className='text-sm col-span-2 md:col-span-1 border p-2 rounded-lg'>
-								{skill}
-							</li>
-						))}
-					</ul>
-				</div>
-
-				<div className='grid grid-cols-3  gap-4 scroll-m-32' id='projects'>
-					{projects.map((project) => (
-						<ProjectCard {...project} key={project.title} />
+			{/* Projects */}
+			<section className='py-24 px-4 md:px-40' id='projects'>
+				<h2 className='text-3xl md:text-4xl font-[family-name:var(--font-newsreader)] font-light mb-12'>
+					Selected Work
+				</h2>
+				<div className='grid md:grid-cols-2 lg:grid-cols-3 gap-6'>
+					{projects.map((project, idx) => (
+						<ProjectCard {...project} key={project.title} index={idx} />
 					))}
 				</div>
+			</section>
 
-				<div className='flex justify-center items-center gap-8 ' id='contact'>
-					{contactLinks.map((link) => (
-						<Link href={link.url} className='w-6 block' key={link.url}>
-							{link.icon}
-						</Link>
+			{/* Experience */}
+			<section className='py-24 px-4 md:px-40' id='experience'>
+				<h2 className='text-3xl md:text-4xl font-[family-name:var(--font-newsreader)] font-light mb-12'>
+					Experience
+				</h2>
+				<div className='space-y-8 max-w-3xl'>
+					{experience.map((exp) => (
+						<div key={exp.company} className='border-l-2 border-[var(--accent)] pl-6'>
+							<h3 className='text-xl font-semibold mb-1'>{exp.position}</h3>
+							<p className='text-[var(--accent)] mb-2'>{exp.company}</p>
+							<p className='text-sm opacity-60'>{exp.date}</p>
+						</div>
 					))}
 				</div>
-			</div>
+			</section>
 
-			<div className='py-4 text-center'> &copy; {new Date().getFullYear()}</div>
+			{/* Skills */}
+			<section className='py-24 px-4 md:px-40' id='skills'>
+				<h2 className='text-3xl md:text-4xl font-[family-name:var(--font-newsreader)] font-light mb-12'>
+					Technologies
+				</h2>
+				<div className='flex flex-wrap gap-3 max-w-3xl'>
+					{skills.map((skill) => (
+						<span 
+							key={skill} 
+							className='px-4 py-2 bg-[var(--card-bg)] border border-[var(--muted)] text-sm'
+						>
+							{skill}
+						</span>
+					))}
+				</div>
+			</section>
+
+			{/* Footer */}
+			<footer className='py-12 px-4 md:px-40 border-t border-[var(--muted)]' id='contact'>
+				<p className='text-sm opacity-60'>
+					&copy; {new Date().getFullYear()} Cyril Yamoah
+				</p>
+			</footer>
 		</div>
 	);
 }
 
-const ProjectCard = (project: Project) => {
+const ProjectCard = (project: Project & { index: number }) => {
 	return (
-		<div className='col-span-3 md:col-span-1'>
-			<div className='w-full p-4 flex-col flex border rounded-lg gap-4  shadow-light transition-shadow duration-300'>
+		<article className='group bg-[var(--card-bg)] border border-[var(--muted)] overflow-hidden hover:border-[var(--accent)] transition-colors'>
+			<div className='relative overflow-hidden aspect-video'>
 				<Image
 					src={project.image}
-					alt='Industry Professionals'
+					alt={project.title}
 					width={1000}
 					height={1000}
-					className='rounded-sm w-full'
+					className='w-full h-full object-cover'
 					quality={100}
 					loading='lazy'
 				/>
-				<h4 className='text-bold text-2xl '>{project.title}</h4>
-				<p className='text-sm'>{project.description}</p>
-				<Link className=' font-bold py-2 px-4 rounded border w-fit text-sm' href={project.link} target='_blank'>
-					View Demo
-				</Link>
-				<p>{project.tech}</p>
 			</div>
-		</div>
+			<div className='p-6 space-y-4'>
+				<h3 className='text-2xl font-[family-name:var(--font-newsreader)] font-semibold'>
+					{project.title}
+				</h3>
+				<p className='text-sm opacity-80 leading-relaxed'>
+					{project.description}
+				</p>
+				<div className='flex flex-wrap gap-2'>
+					{project.tech.split(', ').map((tech) => (
+						<span key={tech} className='text-xs px-2 py-1 bg-[var(--background)] text-[var(--accent)]'>
+							{tech}
+						</span>
+					))}
+				</div>
+				<Link 
+					href={project.link} 
+					target='_blank'
+					className='inline-flex items-center gap-2 text-[var(--accent)] hover:text-[var(--foreground)] transition-colors text-sm font-medium'
+				>
+					<span>View Project</span>
+					<span>→</span>
+				</Link>
+			</div>
+		</article>
 	);
 };
 

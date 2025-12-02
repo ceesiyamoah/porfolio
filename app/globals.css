@@ -3,12 +3,16 @@
 @tailwind utilities;
 
 :root {
-	--background: #002451;
-	--foreground: #d6d6d6;
+	--background: #0f1419;
+	--foreground: #e6e1dc;
+	--accent: #7c9cbf;
+	--accent-dark: #5a7a9a;
+	--muted: #3d4451;
+	--card-bg: #1a1f29;
 }
 
 body {
 	color: var(--foreground);
 	background: var(--background);
-	font-family: Inter, Helvetica, sans-serif;
+	font-family: var(--font-ibm-plex-mono), monospace;
 }
