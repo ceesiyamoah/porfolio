@@ -71,7 +71,7 @@ export default function Home() {
 	return (
 		<div className='size-full relative'>
 			<Navbar />
-			
+
 			{/* Schema.org structured data */}
 			<script
 				type='application/ld+json'
@@ -80,8 +80,8 @@ export default function Home() {
 						'@context': 'https://schema.org',
 						'@type': 'Person',
 						name: 'Cyril Yamoah',
-						url: 'https://cyrilyamoah.vercel.app',
-						image: 'https://cyrilyamoah.vercel.app/logo.png',
+						url: 'https://portfolio.cyrilyamoah.app',
+						image: 'https://portfolio.cyrilyamoah.app/logo.png',
 						jobTitle: 'Frontend Developer',
 						worksFor: {
 							'@type': 'Organization',
@@ -90,10 +90,7 @@ export default function Home() {
 						description:
 							'Expert Frontend Developer specializing in React, Next.js, and TypeScript with 3+ years of experience building scalable web applications.',
 						email: 'ccyamoah@gmail.com',
-						sameAs: [
-							'https://github.com/ceesiyamoah',
-							'https://www.linkedin.com/in/cyril-yamoah/',
-						],
+						sameAs: ['https://github.com/ceesiyamoah', 'https://www.linkedin.com/in/cyril-yamoah/'],
 						knowsAbout: [
 							'React.js',
 							'Next.js',
@@ -110,7 +107,7 @@ export default function Home() {
 					}),
 				}}
 			/>
-			
+
 			{/* Hero Section - Simple & Clean */}
 			<section className='py-24 md:py-32 px-4 md:px-40' id='about'>
 				<div className='max-w-4xl'>
@@ -121,17 +118,24 @@ export default function Home() {
 						Expert Frontend Developer | React, Next.js & TypeScript Specialist
 					</h2>
 					<p className='text-lg md:text-xl leading-relaxed mb-12 opacity-80 max-w-2xl'>
-						Professional frontend developer with 3+ years of experience building scalable, high-performance web applications. 
-						Specialized in React, Next.js, and TypeScript development for real estate technology, SaaS platforms, and enterprise solutions. 
-						Delivering pixel-perfect, accessible, and SEO-optimized user interfaces that drive business results.
+						Professional frontend developer with 3+ years of experience building scalable, high-performance web
+						applications. Specialized in React, Next.js, and TypeScript development for real estate technology, SaaS
+						platforms, and enterprise solutions. Delivering pixel-perfect, accessible, and SEO-optimized user interfaces
+						that drive business results.
 					</p>
 					<div className='flex gap-6'>
 						{contactLinks.map((link) => (
-							<Link 
-								href={link.url} 
-								className='w-6 h-6 hover:opacity-70 transition-opacity' 
+							<Link
+								href={link.url}
+								className='w-6 h-6 hover:opacity-70 transition-opacity'
 								key={link.url}
-								aria-label={link.url.includes('github') ? 'GitHub Profile - Cyril Yamoah' : link.url.includes('linkedin') ? 'LinkedIn Profile - Cyril Yamoah' : 'Email Cyril Yamoah'}
+								aria-label={
+									link.url.includes('github')
+										? 'GitHub Profile - Cyril Yamoah'
+										: link.url.includes('linkedin')
+										? 'LinkedIn Profile - Cyril Yamoah'
+										: 'Email Cyril Yamoah'
+								}
 							>
 								{link.icon}
 							</Link>
@@ -175,8 +179,8 @@ export default function Home() {
 				</h2>
 				<div className='flex flex-wrap gap-3 max-w-3xl' role='list'>
 					{skills.map((skill) => (
-						<span 
-							key={skill} 
+						<span
+							key={skill}
 							className='px-4 py-2 bg-[var(--card-bg)] border border-[var(--muted)] text-sm'
 							role='listitem'
 						>
@@ -189,9 +193,7 @@ export default function Home() {
 			{/* Footer */}
 			<footer className='py-12 px-4 md:px-40 border-t border-[var(--muted)]' id='contact'>
 				<div className='flex flex-col md:flex-row justify-between items-start md:items-center gap-4'>
-					<p className='text-sm opacity-60'>
-						&copy; {new Date().getFullYear()} Cyril Yamoah. All rights reserved.
-					</p>
+					<p className='text-sm opacity-60'>&copy; {new Date().getFullYear()} Cyril Yamoah. All rights reserved.</p>
 					<nav aria-label='Footer navigation'>
 						<ul className='flex gap-6 text-sm'>
 							<li>
@@ -224,7 +226,11 @@ export default function Home() {
 
 const ProjectCard = (project: Project & { index: number }) => {
 	return (
-		<article className='group bg-[var(--card-bg)] border border-[var(--muted)] overflow-hidden hover:border-[var(--accent)] transition-colors flex flex-col' itemScope itemType='https://schema.org/CreativeWork'>
+		<article
+			className='group bg-[var(--card-bg)] border border-[var(--muted)] overflow-hidden hover:border-[var(--accent)] transition-colors flex flex-col'
+			itemScope
+			itemType='https://schema.org/CreativeWork'
+		>
 			<div className='relative overflow-hidden aspect-video'>
 				<Image
 					src={project.image}
@@ -245,13 +251,17 @@ const ProjectCard = (project: Project & { index: number }) => {
 				</p>
 				<div className='flex flex-wrap gap-2 mb-6' aria-label='Technologies used'>
 					{project.tech.split(', ').map((tech) => (
-						<span key={tech} className='text-xs px-2 py-1 bg-[var(--background)] text-[var(--accent)]' itemProp='keywords'>
+						<span
+							key={tech}
+							className='text-xs px-2 py-1 bg-[var(--background)] text-[var(--accent)]'
+							itemProp='keywords'
+						>
 							{tech}
 						</span>
 					))}
 				</div>
-				<Link 
-					href={project.link} 
+				<Link
+					href={project.link}
 					target='_blank'
 					rel='noopener noreferrer'
 					className='inline-flex items-center gap-2 text-[var(--accent)] hover:text-[var(--foreground)] transition-colors text-sm font-medium mt-auto'
@@ -331,7 +341,7 @@ export const metadata: Metadata = {
 		'React portfolio',
 		'Developer showcase',
 	],
-	authors: [{ name: 'Cyril Yamoah', url: 'https://cyrilyamoah.vercel.app' }],
+	authors: [{ name: 'Cyril Yamoah', url: 'https://portfolio.cyrilyamoah.app' }],
 	creator: 'Cyril Yamoah',
 	publisher: 'Cyril Yamoah',
 	formatDetection: {
@@ -361,14 +371,14 @@ export const metadata: Metadata = {
 	openGraph: {
 		type: 'website',
 		locale: 'en_US',
-		url: 'https://cyrilyamoah.vercel.app',
+		url: 'https://portfolio.cyrilyamoah.app',
 		siteName: 'Cyril Yamoah - Frontend Developer Portfolio',
 		title: 'Cyril Yamoah - Expert Frontend Developer | React, Next.js & TypeScript',
 		description:
 			'Professional Frontend Developer with 3+ years of experience building high-performance web applications using React, Next.js, and TypeScript. Specialized in real estate tech, SaaS platforms, and enterprise solutions. View my portfolio of production-ready projects.',
 		images: [
 			{
-				url: 'https://cyrilyamoah.vercel.app/logo.png',
+				url: 'https://portfolio.cyrilyamoah.app/logo.png',
 				width: 1200,
 				height: 630,
 				alt: 'Cyril Yamoah - Frontend Developer Portfolio',
@@ -381,7 +391,7 @@ export const metadata: Metadata = {
 		title: 'Cyril Yamoah - Expert Frontend Developer | React, Next.js & TypeScript',
 		description:
 			'Professional Frontend Developer specializing in React, Next.js, TypeScript. 3+ years experience. View portfolio of real estate tech & SaaS projects.',
-		images: ['https://cyrilyamoah.vercel.app/logo.png'],
+		images: ['https://portfolio.cyrilyamoah.app/logo.png'],
 		creator: '@cyrilyamoah',
 		site: '@cyrilyamoah',
 	},
@@ -398,22 +408,20 @@ export const metadata: Metadata = {
 		},
 	},
 	alternates: {
-		canonical: 'https://cyrilyamoah.vercel.app',
+		canonical: 'https://portfolio.cyrilyamoah.app',
 	},
 	verification: {
-		google: process.env.NEXT_PUBLIC_GOOGLE_TAG,
-		yandex: process.env.NEXT_PUBLIC_YANDEX_VERIFICATION,
-		bing: process.env.NEXT_PUBLIC_BING_VERIFICATION,
+		google: 'KwN1HnFyo_kPeFkSozTVQ3qUsVLC033RLyrt-2fIFMI',
 	},
 	category: 'Technology',
 	classification: 'Web Development Portfolio',
-	metadataBase: new URL('https://cyrilyamoah.vercel.app/'),
+	metadataBase: new URL('https://portfolio.cyrilyamoah.app/'),
 	other: {
-		'og:phone_number': process.env.NEXT_PUBLIC_PHONE,
+		'og:phone_number': '+233204612277',
 		'og:email': 'ccyamoah@gmail.com',
 		'og:locality': 'Remote',
 		'og:region': 'Global',
-		'og:country-name': 'USA',
+		'og:country-name': 'Ghana',
 		'linkedin:owner': 'cyril-yamoah',
 	},
 };
