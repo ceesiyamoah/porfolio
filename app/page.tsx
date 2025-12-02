@@ -376,22 +376,12 @@ export const metadata: Metadata = {
 		title: 'Cyril Yamoah - Expert Frontend Developer | React, Next.js & TypeScript',
 		description:
 			'Professional Frontend Developer with 3+ years of experience building high-performance web applications using React, Next.js, and TypeScript. Specialized in real estate tech, SaaS platforms, and enterprise solutions. View my portfolio of production-ready projects.',
-		images: [
-			{
-				url: 'https://portfolio.cyrilyamoah.app/logo.png',
-				width: 1200,
-				height: 630,
-				alt: 'Cyril Yamoah - Frontend Developer Portfolio',
-				type: 'image/png',
-			},
-		],
 	},
 	twitter: {
 		card: 'summary_large_image',
 		title: 'Cyril Yamoah - Expert Frontend Developer | React, Next.js & TypeScript',
 		description:
 			'Professional Frontend Developer specializing in React, Next.js, TypeScript. 3+ years experience. View portfolio of real estate tech & SaaS projects.',
-		images: ['https://portfolio.cyrilyamoah.app/logo.png'],
 		creator: '@cyrilyamoah',
 		site: '@cyrilyamoah',
 	},
