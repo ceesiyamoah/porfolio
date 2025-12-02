@@ -81,7 +81,7 @@ export default function Home() {
 						'@type': 'Person',
 						name: 'Cyril Yamoah',
 						url: 'https://portfolio.cyrilyamoah.app',
-						image: 'https://portfolio.cyrilyamoah.app/logo.png',
+						image: '/logo.png',
 						jobTitle: 'Frontend Developer',
 						worksFor: {
 							'@type': 'Organization',
@@ -382,8 +382,8 @@ export const metadata: Metadata = {
 		title: 'Cyril Yamoah - Expert Frontend Developer | React, Next.js & TypeScript',
 		description:
 			'Professional Frontend Developer specializing in React, Next.js, TypeScript. 3+ years experience. View portfolio of real estate tech & SaaS projects.',
-		creator: '@cyrilyamoah',
-		site: '@cyrilyamoah',
+		creator: '@ceesiyamoah',
+		site: '@ceesiyamoah',
 	},
 	robots: {
 		index: true,
