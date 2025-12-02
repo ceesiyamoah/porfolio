@@ -1,4 +1,4 @@
-import { Newsreader, IBM_Plex_Mono } from 'next/font/google';
+import { Newsreader, IBM_Plex_Mono, Bricolage_Grotesque } from 'next/font/google';
 import './globals.css';
 import { ReactNode } from 'react';
 
@@ -14,14 +14,20 @@ const ibmPlexMono = IBM_Plex_Mono({
 	weight: ['300', '400', '500', '600'],
 });
 
+const bricolageGrotesque = Bricolage_Grotesque({
+	variable: '--font-bricolage',
+	subsets: ['latin'],
+	weight: ['400', '600', '700'],
+});
+
 export default function RootLayout({
 	children,
 }: Readonly<{
 	children: ReactNode;
 }>) {
 	return (
-		<html lang='en'>
-			<body className={`${newsreader.variable} ${ibmPlexMono.variable} antialiased scroll-smooth`}>{children}</body>
+		<html lang='en' className='scroll-smooth'>
+			<body className={`${newsreader.variable} ${ibmPlexMono.variable} ${bricolageGrotesque.variable} antialiased`}>{children}</body>
 		</html>
 	);
 }

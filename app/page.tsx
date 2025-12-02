@@ -89,7 +89,7 @@ export default function Home() {
 						{contactLinks.map((link) => (
 							<Link 
 								href={link.url} 
-								className='w-12 h-12 flex items-center justify-center border border-[var(--muted)] hover:border-[var(--accent)] transition-colors' 
+								className='w-6 h-6 hover:opacity-70 transition-opacity' 
 								key={link.url}
 								aria-label={link.url.includes('github') ? 'GitHub' : link.url.includes('linkedin') ? 'LinkedIn' : 'Email'}
 							>
@@ -157,7 +157,7 @@ export default function Home() {
 
 const ProjectCard = (project: Project & { index: number }) => {
 	return (
-		<article className='group bg-[var(--card-bg)] border border-[var(--muted)] overflow-hidden hover:border-[var(--accent)] transition-colors'>
+		<article className='group bg-[var(--card-bg)] border border-[var(--muted)] overflow-hidden hover:border-[var(--accent)] transition-colors flex flex-col'>
 			<div className='relative overflow-hidden aspect-video'>
 				<Image
 					src={project.image}
@@ -169,14 +169,14 @@ const ProjectCard = (project: Project & { index: number }) => {
 					loading='lazy'
 				/>
 			</div>
-			<div className='p-6 space-y-4'>
-				<h3 className='text-2xl font-[family-name:var(--font-newsreader)] font-semibold'>
+			<div className='p-6 flex flex-col flex-1'>
+				<h3 className='text-2xl font-bold font-[family-name:var(--font-bricolage)] mb-4'>
 					{project.title}
 				</h3>
-				<p className='text-sm opacity-80 leading-relaxed'>
+				<p className='text-sm opacity-80 leading-relaxed mb-4'>
 					{project.description}
 				</p>
-				<div className='flex flex-wrap gap-2'>
+				<div className='flex flex-wrap gap-2 mb-6'>
 					{project.tech.split(', ').map((tech) => (
 						<span key={tech} className='text-xs px-2 py-1 bg-[var(--background)] text-[var(--accent)]'>
 							{tech}
@@ -186,7 +186,7 @@ const ProjectCard = (project: Project & { index: number }) => {
 				<Link 
 					href={project.link} 
 					target='_blank'
-					className='inline-flex items-center gap-2 text-[var(--accent)] hover:text-[var(--foreground)] transition-colors text-sm font-medium'
+					className='inline-flex items-center gap-2 text-[var(--accent)] hover:text-[var(--foreground)] transition-colors text-sm font-medium mt-auto'
 				>
 					<span>View Project</span>
 					<span>→</span>
