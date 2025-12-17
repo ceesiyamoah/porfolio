@@ -23,14 +23,16 @@ const projects: Project[] = [
 	},
 	{
 		title: 'BPO TECH',
-		description: 'A comprehensive CRM solution for real estate professionals featuring lead tracking, automated follow-ups, and transaction management.',
+		description:
+			'A comprehensive CRM solution for real estate professionals featuring lead tracking, automated follow-ups, and transaction management.',
 		tech: 'React, Javascript, Material UI, Redux',
 		image: '/bpotech.png',
 		link: 'https://bpotech.io',
 	},
 	{
 		title: 'BPO Homes',
-		description: 'A property listing marketplace connecting buyers with agents, featuring advanced search filters, virtual tours, and neighborhood insights.',
+		description:
+			'A property listing marketplace connecting buyers with agents, featuring advanced search filters, virtual tours, and neighborhood insights.',
 		tech: 'React, Javascript, Material UI, Redux',
 		image: '/bpohomes.png',
 		link: 'https://bpohomes.com',
@@ -42,17 +44,42 @@ const experience = [
 		position: 'Frontend Developer',
 		company: 'Jotella Media Group',
 		date: '2022–Present',
-		highlights: ['Built and maintained 3 production web apps serving 10K+ users', 'Reduced page load times by 40% through code splitting and lazy loading', 'Led migration from JavaScript to TypeScript across all projects'],
+		highlights: [
+			'Built and maintained 3 production web apps serving 10K+ users',
+			'Reduced page load times by 40% through code splitting and lazy loading',
+			'Led migration from JavaScript to TypeScript across all projects',
+		],
 	},
 	{
 		position: 'Frontend Developer',
 		company: 'Infoview Data Solutions',
 		date: '2021–2022',
-		highlights: ['Developed responsive dashboards for real estate analytics', 'Integrated RESTful APIs and implemented Redux state management', 'Collaborated with UI/UX team to implement pixel-perfect designs'],
+		highlights: [
+			'Developed responsive dashboards for real estate analytics',
+			'Integrated RESTful APIs and implemented Redux state management',
+			'Collaborated with UI/UX team to implement pixel-perfect designs',
+		],
 	},
 ];
 
-const skills = ['React', 'Next.js', 'TypeScript', 'JavaScript', 'Redux', 'Tailwind CSS', 'Material UI', 'HTML5', 'CSS3', 'Git', 'REST APIs', 'GraphQL', 'Responsive Design', 'Web Performance', 'Accessibility', 'Figma'];
+const skills = [
+	'React',
+	'Next.js',
+	'TypeScript',
+	'JavaScript',
+	'Redux',
+	'Tailwind CSS',
+	'Material UI',
+	'HTML5',
+	'CSS3',
+	'Git',
+	'REST APIs',
+	'GraphQL',
+	'Responsive Design',
+	'Web Performance',
+	'Accessibility',
+	'Figma',
+];
 
 const contactLinks = [
 	{
@@ -116,11 +143,19 @@ export default function Home() {
 					<h1 className='text-5xl md:text-7xl font-light font-[family-name:var(--font-newsreader)] mb-6 leading-tight animate-fade-in-up'>
 						Cyril Yamoah
 					</h1>
-					<h2 className='text-xl md:text-2xl text-[var(--accent)] mb-8 font-medium animate-fade-in-up' style={{ animationDelay: '100ms' }}>
+					<h2
+						className='text-xl md:text-2xl text-[var(--accent)] mb-8 font-medium animate-fade-in-up'
+						style={{ animationDelay: '100ms' }}
+					>
 						I build websites that convert visitors into customers.
 					</h2>
-					<p className='text-lg md:text-xl leading-relaxed mb-12 opacity-80 max-w-2xl animate-fade-in-up' style={{ animationDelay: '200ms' }}>
-						Your users expect fast, polished experiences. I create them—websites and apps that load instantly, work flawlessly, and help your business grow. From real estate platforms to SaaS dashboards, I've shipped products that real people use every day.
+					<p
+						className='text-lg md:text-xl leading-relaxed mb-12 opacity-80 max-w-2xl animate-fade-in-up'
+						style={{ animationDelay: '200ms' }}
+					>
+						Your users expect fast, polished experiences. I create them—websites and apps that load instantly, work
+						flawlessly, and help your business grow. From real estate platforms to SaaS dashboards, I&apos;ve shipped
+						products that real people use every day.
 					</p>
 					<div className='flex gap-6 animate-fade-in-up' style={{ animationDelay: '300ms' }}>
 						{contactLinks.map((link) => (
@@ -159,12 +194,14 @@ export default function Home() {
 
 			{/* Experience */}
 			<section className='py-24 px-4 md:px-40' id='experience' aria-label='Professional Experience'>
-				<h2 className='text-3xl md:text-4xl font-[family-name:var(--font-newsreader)] font-light mb-12'>
-					Experience
-				</h2>
+				<h2 className='text-3xl md:text-4xl font-[family-name:var(--font-newsreader)] font-light mb-12'>Experience</h2>
 				<div className='space-y-8 max-w-3xl'>
 					{experience.map((exp, idx) => (
-						<article key={exp.company} className='border-l-2 border-[var(--accent)] pl-6 animate-fade-in-up' style={{ animationDelay: `${idx * 100}ms` }}>
+						<article
+							key={exp.company}
+							className='border-l-2 border-[var(--accent)] pl-6 animate-fade-in-up'
+							style={{ animationDelay: `${idx * 100}ms` }}
+						>
 							<h3 className='text-xl font-semibold mb-1'>{exp.position}</h3>
 							<p className='text-[var(--accent)] mb-2'>{exp.company}</p>
 							<time className='text-sm opacity-60 block mb-3'>{exp.date}</time>
@@ -183,9 +220,7 @@ export default function Home() {
 
 			{/* Skills */}
 			<section className='py-24 px-4 md:px-40' id='skills' aria-label='Technical Skills'>
-				<h2 className='text-3xl md:text-4xl font-[family-name:var(--font-newsreader)] font-light mb-12'>
-					Skills
-				</h2>
+				<h2 className='text-3xl md:text-4xl font-[family-name:var(--font-newsreader)] font-light mb-12'>Skills</h2>
 				<div className='flex flex-wrap gap-3 max-w-3xl' role='list'>
 					{skills.map((skill, idx) => (
 						<span
@@ -306,8 +341,7 @@ const ProjectCard = (project: Project & { index: number }) => {
 
 export const metadata: Metadata = {
 	title: 'Cyril Yamoah — Web Developer for Startups & Growing Businesses',
-	description:
-		'I build fast, modern websites that help businesses grow. Specializing in React and Next.js development for startups, real estate companies, and SaaS products. View my work and let's talk about your project.',
+	description: `I build fast, modern websites that help businesses grow. Specializing in React and Next.js development for startups, real estate companies, and SaaS products. View my work and let's talk about your project.`,
 	keywords: [
 		// Brand
 		'Cyril Yamoah',
@@ -384,8 +418,7 @@ export const metadata: Metadata = {
 		url: 'https://portfolio.cyrilyamoah.com',
 		siteName: 'Cyril Yamoah — Web Developer',
 		title: 'Cyril Yamoah — Web Developer for Startups & Growing Businesses',
-		description:
-			'I build fast, modern websites that help businesses grow. From real estate platforms to SaaS dashboards—see my work and let's talk about your next project.',
+		description: `I build fast, modern websites that help businesses grow. From real estate platforms to SaaS dashboards—see my work and let's talk about your next project.`,
 		images: [
 			{
 				url: '/logo.png',
