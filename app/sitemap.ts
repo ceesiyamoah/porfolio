@@ -4,36 +4,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
 	const baseUrl = 'https://portfolio.cyrilyamoah.com';
 	const currentDate = new Date();
 
+	// Note: Only include actual page URLs, not anchor links
+	// Search engines don't index anchor fragments (#about, #projects, etc.)
 	return [
 		{
 			url: baseUrl,
 			lastModified: currentDate,
 			changeFrequency: 'weekly',
 			priority: 1,
-		},
-		{
-			url: `${baseUrl}/#about`,
-			lastModified: currentDate,
-			changeFrequency: 'monthly',
-			priority: 0.8,
-		},
-		{
-			url: `${baseUrl}/#projects`,
-			lastModified: currentDate,
-			changeFrequency: 'weekly',
-			priority: 0.9,
-		},
-		{
-			url: `${baseUrl}/#experience`,
-			lastModified: currentDate,
-			changeFrequency: 'monthly',
-			priority: 0.7,
-		},
-		{
-			url: `${baseUrl}/#skills`,
-			lastModified: currentDate,
-			changeFrequency: 'monthly',
-			priority: 0.7,
 		},
 	];
 }
