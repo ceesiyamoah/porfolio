@@ -1,0 +1,130 @@
+---
+title: 'Why Server-Side Rendering Finally Clicked for Me'
+excerpt: 'From building client-side dashboards to understanding why link previews matter—my journey to appreciating SSR and what it actually solves.'
+date: '2025-11-18'
+readTime: '6 min read'
+tags: ['Next.js', 'React', 'SSR', 'Web Development']
+---
+
+# Why Server-Side Rendering Finally Clicked for Me
+
+I didn't understand server-side rendering for a long time. Not really.
+
+I knew the words. I could parrot the benefits—SEO, faster first paint, whatever. But I didn't _get_ it until I saw the problem with my own eyes.
+
+---
+
+## Where I Started
+
+In school, I learned HTML, CSS, and JavaScript the old-fashioned way. Create a file, open it in a browser, see your work. Simple. I never deployed anything to an actual server. The browser was my server.
+
+Then I discovered React, specifically Create React App. It felt like magic. Components, state, routing—everything happened in the browser. When you built for production, you got a single `index.html` file and a bunch of JavaScript. That JavaScript would boot up, React Router would figure out what page you're on, and the app would render.
+
+I built dashboards. Lots of them. Admin panels, analytics views, internal tools. Client-side rendering made perfect sense for these. Users log in, they interact heavily, state changes constantly. The initial load time didn't matter much because users were going to spend hours in the app anyway.
+
+I thought I understood web development.
+
+---
+
+## The Moment It Clicked
+
+It wasn't until I deployed a plain HTML file to an actual server that I started to see the difference.
+
+With a static HTML file, the server sends the complete page. The browser receives it, renders it, done. No JavaScript needed to see content. No loading spinners. No blank white screen while React boots up.
+
+Then I noticed something else—something I'd never thought about before.
+
+**Link previews.**
+
+You know when you share a link on WhatsApp, or Facebook, or X, and it shows a little preview? The title, description, maybe an image? I started paying attention to these. When I shared links to my React apps... nothing. Just a bare URL. Sometimes a generic title. No preview.
+
+But when I shared an Amazon product link? There it was—product name, image, price. A proper preview that made you want to click.
+
+---
+
+## Why Client-Side Apps Don't Get Previews
+
+Here's what happens when you share a link:
+
+1. The platform (WhatsApp, Facebook, Slack, etc.) sends a bot to fetch your page
+2. The bot looks for Open Graph meta tags in the HTML
+3. It uses those tags to build the preview
+
+These Open Graph tags look like this:
+
+```html
+<meta property="og:title" content="Nike Air Max 90" />
+<meta property="og:description" content="Classic sneakers with Air cushioning" />
+<meta property="og:image" content="https://example.com/shoe-preview.jpg" />
+```
+
+That `og:image` tag is what creates the visual preview—the actual picture you see when someone shares a link. It's why Amazon product links show the product photo, why YouTube links show the video thumbnail, and why articles show their featured image.
+
+The problem with client-side React apps? When that bot visits your page, all it sees is:
+
+```html
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>My App</title>
+	</head>
+	<body>
+		<div id="root"></div>
+		<script src="/bundle.js"></script>
+	</body>
+</html>
+```
+
+That's it. No `og:title`. No `og:description`. No `og:image`. The actual content—including those meta tags—only appears _after_ JavaScript runs. And bots don't wait around for that. They grab what's in the initial HTML and leave.
+
+Server-side rendering fixes this. When a bot (or a user, or Google) visits a page, the server sends back complete HTML with all the content and meta tags already in place. The Open Graph tags are right there in the `<head>`. The preview works. The page is indexed properly.
+
+Next.js makes this especially easy. You can set dynamic OG images per page—so a product page shows the product image, a blog post shows its featured image, and your homepage shows your brand. All rendered on the server, ready for any bot that comes knocking.
+
+---
+
+## SEO Is the Same Problem
+
+Google has gotten better at executing JavaScript, but it's not perfect. And most other search engines? They're not even close.
+
+When a crawler visits a client-side app, it sees that empty `<div id="root">`. Your product pages, your blog posts, your carefully crafted content—none of it is in the initial HTML. It might get indexed eventually. It might not.
+
+With server-side rendering, the HTML is complete on arrival. Crawlers see exactly what users see. Your pages get indexed properly.
+
+This matters less for dashboards behind a login. But for anything public-facing—marketing sites, e-commerce, blogs—it's critical.
+
+---
+
+## Next.js: The Best of Both
+
+What I appreciate about Next.js is that it doesn't force you to pick one approach.
+
+Some pages need to be server-rendered. Product pages, blog posts, landing pages—anything that benefits from SEO and link previews. Next.js handles this by default.
+
+Other pages are better as client-side. Complex dashboards with lots of interactivity, pages behind authentication, real-time features. You can still build these. Just add `'use client'` at the top of your component.
+
+I used to feel weird about sprinkling `'use client'` all over my projects. Like I was doing something wrong, opting out of the "right" way to build. But I've come to see it differently now. It's not opting out—it's choosing the right tool for each piece of your app.
+
+---
+
+## Where I'm At Now
+
+Next.js 14 introduced `'use server'` for server actions. I'm still wrapping my head around it. The mental model is shifting again—now you can call server functions directly from client components without writing API routes.
+
+I don't have a verdict yet. I'm still learning, still building, still figuring out where this makes sense and where it adds complexity for no reason.
+
+But I understand the _why_ now. Server-side rendering isn't about following best practices or chasing performance benchmarks. It's about making sure your content exists when something—a bot, a crawler, a link preview—comes looking for it.
+
+That's the thing about web development. Sometimes you don't understand a concept until you run into the problem it solves. SSR clicked for me when I shared a link and saw an empty preview. Maybe this post will save you from that same moment.
+
+---
+
+## Key Takeaways
+
+- **Client-side apps** render in the browser after JavaScript loads. Bots and crawlers often see empty pages.
+- **Server-side rendering** sends complete HTML from the server. Content is visible immediately.
+- **Link previews** rely on meta tags being present in the initial HTML. Client-side apps fail here.
+- **SEO** depends on crawlers being able to see your content. SSR ensures they can.
+- **Next.js** lets you mix both approaches. Use SSR for public pages, client rendering for interactive features.
+
+If you've been building client-side apps and never thought about this—share one of your project links in a group chat. See what preview shows up. That might be your clicking moment too.

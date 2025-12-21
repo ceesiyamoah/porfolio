@@ -1,0 +1,391 @@
+---
+title: 'Deploy Django to a Server with Docker and Nginx'
+excerpt: 'A step-by-step guide to containerizing your Django application and deploying it to a Linux server with Docker Compose, Nginx reverse proxy, and GitHub Actions CI/CD.'
+date: '2025-12-20'
+readTime: '15 min read'
+tags: ['Django', 'Docker', 'DevOps', 'Nginx', 'Python']
+---
+
+# Deploy Django to a Server with Docker and Nginx
+
+After spending a week wrestling with my Next.js deployment, I thought I had this whole server thing figured out. Then I tried deploying Django.
+
+Different runtime. Different file structure. Static files that need to be served separately. A database that needs to persist. Environment variables everywhere. And of course, the classic "it works on my machine" problem that Docker is supposed to solve—except you still need to actually set up Docker on your server first.
+
+For my first Django deployment, I did everything manually. No CI/CD, no automation—just me SSH-ing into the server, running commands one by one, watching things break, and figuring out why. I wanted to understand what was actually happening before I let a GitHub Action do it for me. It took longer, but when something goes wrong in production now, I actually know where to look.
+
+The good news? Once you understand the pattern, it clicks. Docker gives you a reproducible environment, Nginx handles the web traffic, and GitHub Actions automates the whole thing. No more SSH-ing in to manually pull code.
+
+This guide covers everything from installing Docker on a fresh Ubuntu server to setting up automated deployments. Let's get into it.
+
+---
+
+## Prerequisites
+
+- A Linux server (Ubuntu 22.04 recommended) — EC2, DigitalOcean, Linode, etc.
+- A domain name pointed to your server's IP
+- A Django project with a `Dockerfile` and `docker-compose.yml`
+- Basic SSH and terminal knowledge
+
+---
+
+## Part 1: Install Docker on Ubuntu
+
+### Step 1: Update packages and install prerequisites
+
+```bash
+sudo apt update && sudo apt upgrade -y
+sudo apt install -y ca-certificates curl gnupg
+```
+
+This refreshes the package list, upgrades existing packages, and installs tools needed to securely download Docker. `ca-certificates` handles SSL verification, `curl` downloads files from the internet, and `gnupg` verifies package signatures.
+
+### Step 2: Add Docker's official GPG key
+
+```bash
+sudo install -m 0755 -d /etc/apt/keyrings
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+sudo chmod a+r /etc/apt/keyrings/docker.gpg
+```
+
+This downloads Docker's cryptographic signature key. Ubuntu uses this to verify that Docker packages are authentic and haven't been tampered with. Think of it as Docker's official stamp of approval.
+
+### Step 3: Add Docker repository
+
+```bash
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+```
+
+This tells Ubuntu where to download Docker from. Ubuntu's default repos have Docker but it's often outdated. Docker's official repo always has the latest stable version. The command auto-detects your CPU architecture and Ubuntu version.
+
+### Step 4: Install Docker
+
+```bash
+sudo apt update
+sudo apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+```
+
+This installs Docker and all its components:
+
+- `docker-ce` — the main engine
+- `docker-ce-cli` — command-line interface
+- `containerd.io` — container runtime
+- `docker-compose-plugin` — enables multi-container setups with `docker compose`
+
+### Step 5: Add your user to the docker group
+
+```bash
+sudo usermod -aG docker $USER
+```
+
+By default only root can run Docker. This adds your user to the docker group so you can run docker commands without `sudo` every time.
+
+### Step 6: Apply group change
+
+```bash
+newgrp docker
+```
+
+Linux group changes require logging out and back in. This command applies the change immediately in your current terminal session. Alternatively, disconnect from SSH and reconnect.
+
+### Step 7: Verify installation
+
+```bash
+docker --version
+docker compose version
+```
+
+Confirms Docker is installed correctly. You should see version numbers for both. If these work without `sudo`, you're all set.
+
+---
+
+## Part 2: Set Up SSH Keys for GitHub
+
+Your server needs to pull code from your private repo. SSH keys make this secure and passwordless.
+
+### Step 1: Generate SSH key
+
+```bash
+ssh-keygen -t ed25519 -C "your-email@example.com"
+```
+
+Press Enter for all prompts (default location, no passphrase is fine for servers).
+
+### Step 2: Start the SSH agent
+
+```bash
+eval "$(ssh-agent -s)"
+ssh-add ~/.ssh/id_ed25519
+```
+
+### Step 3: Copy your public key
+
+```bash
+cat ~/.ssh/id_ed25519.pub
+```
+
+This prints a long string starting with `ssh-ed25519`. Copy the entire line.
+
+### Step 4: Add to GitHub
+
+1. Go to https://github.com/settings/keys
+2. Click "New SSH key"
+3. Title: Something like "Production Server" or your server name
+4. Key: Paste the key you copied
+5. Click "Add SSH key"
+
+### Step 5: Test connection
+
+```bash
+ssh -T git@github.com
+```
+
+You should see: `Hi username! You've successfully authenticated`
+
+---
+
+## Part 3: Clone and Configure Your Project
+
+### Step 1: Clone your repository
+
+```bash
+cd ~
+git clone git@github.com:yourusername/your-django-project.git
+cd your-django-project
+```
+
+### Step 2: Create your environment file
+
+```bash
+nano .env
+```
+
+Add your production environment variables:
+
+```bash title=".env"
+DEBUG=False
+SECRET_KEY=your-super-secret-production-key
+ALLOWED_HOSTS=api.yourdomain.com
+DATABASE_URL=postgres://user:password@db:5432/dbname
+```
+
+> ⚠️ Never commit `.env` to git. Make sure it's in your `.gitignore`.
+
+### Step 3: Build and start containers
+
+```bash
+docker compose up --build -d
+```
+
+The `-d` flag runs containers in detached mode (background). First build takes a few minutes as it downloads images and installs dependencies.
+
+### Step 4: Run migrations
+
+```bash
+docker compose exec web python manage.py migrate
+docker compose exec web python manage.py collectstatic --noinput
+```
+
+---
+
+## Part 4: Configure Nginx as Reverse Proxy
+
+Nginx sits in front of your Django container, handling SSL termination and serving static files efficiently.
+
+### Step 1: Install Nginx
+
+```bash
+sudo apt install nginx -y
+sudo systemctl start nginx
+sudo systemctl enable nginx
+```
+
+### Step 2: Create site configuration
+
+```bash
+sudo nano /etc/nginx/sites-available/api.yourdomain.com
+```
+
+Add this configuration:
+
+```nginx showLineNumbers title="nginx.conf"
+server {
+    listen 80;
+    server_name api.yourdomain.com;
+
+    # Get real visitor IP from Cloudflare (if using)
+    real_ip_header CF-Connecting-IP;
+
+    location / {
+        proxy_pass http://127.0.0.1:8000;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+
+    location /static/ {
+        alias /home/ubuntu/your-django-project/staticfiles/;
+    }
+}
+```
+
+### Step 3: Enable the site
+
+```bash
+sudo ln -s /etc/nginx/sites-available/api.yourdomain.com /etc/nginx/sites-enabled/
+sudo nginx -t
+sudo systemctl reload nginx
+```
+
+---
+
+## Part 5: Fix Static Files Permissions
+
+Nginx runs as `www-data` user and needs permission to read your static files. This trips up a lot of people.
+
+```bash
+# Give Nginx read access to static files
+sudo chmod -R 755 /home/ubuntu/your-django-project/staticfiles/
+sudo chown -R ubuntu:www-data /home/ubuntu/your-django-project/staticfiles/
+
+# Nginx also needs to traverse parent directories
+chmod 755 /home/ubuntu
+chmod 755 /home/ubuntu/your-django-project
+```
+
+Without this, you'll get 403 Forbidden errors when loading CSS/JS files.
+
+---
+
+## Part 6: Set Up GitHub Actions for CI/CD
+
+Automate deployments so pushing to `main` triggers a deploy.
+
+### Step 1: Generate a deploy key on your server
+
+```bash
+ssh-keygen -t ed25519 -C "github-actions-deploy" -f ~/.ssh/github_actions_key -N ""
+```
+
+### Step 2: Add public key to authorized_keys
+
+```bash
+cat ~/.ssh/github_actions_key.pub >> ~/.ssh/authorized_keys
+```
+
+### Step 3: Copy the private key
+
+```bash
+cat ~/.ssh/github_actions_key
+```
+
+Copy the entire output including `-----BEGIN OPENSSH PRIVATE KEY-----` and `-----END OPENSSH PRIVATE KEY-----`.
+
+### Step 4: Add secrets to GitHub
+
+Go to your repo → Settings → Secrets and variables → Actions. Add:
+
+- `SSH_PRIVATE_KEY`: The private key you copied
+- `SSH_HOST`: Your server's IP address
+- `SSH_USER`: `ubuntu` (or your username)
+
+### Step 5: Create workflow file
+
+Create `.github/workflows/deploy.yml`:
+
+```yaml showLineNumbers title=".github/workflows/deploy.yml"
+name: Deploy to Production
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy to server
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            cd ~/your-django-project
+            git pull origin main
+            docker compose down
+            docker compose up --build -d
+            docker compose exec -T web python manage.py migrate
+            docker compose exec -T web python manage.py collectstatic --noinput
+```
+
+Now every push to `main` automatically deploys to your server.
+
+---
+
+## Important: CORS and Authentication
+
+If your Django backend and frontend are on different domains (e.g., `api.yourdomain.com` and `app.yourdomain.com`), you'll run into CORS issues with cookies.
+
+I learned this the hard way. My initial setup used Django's session-based authentication with cookies. It worked perfectly in local development where everything ran on `localhost`. Then I deployed—backend on one subdomain, frontend on another—and suddenly users couldn't stay logged in.
+
+The problem? Browsers treat subdomains as different origins. Cookies set by `api.yourdomain.com` won't be sent to `app.yourdomain.com` by default. You _can_ make it work with `SameSite=None`, `Secure` flags, and proper CORS headers, but it's a rabbit hole of configuration that breaks in subtle ways across different browsers.
+
+**The simpler solution**: Use Bearer tokens (JWT) for authentication instead of session cookies. The frontend stores the token in memory or localStorage, and sends it in the `Authorization` header with every request. No cookies, no cross-domain headaches.
+
+```bash
+pip install djangorestframework-simplejwt
+```
+
+If I had known this from the start, I would have saved myself hours of debugging cookie issues.
+
+---
+
+## Troubleshooting
+
+### Check if containers are running
+
+```bash
+docker compose ps
+docker compose logs web
+```
+
+### Restart containers
+
+```bash
+docker compose down
+docker compose up -d
+```
+
+### Check Nginx errors
+
+```bash
+sudo tail -f /var/log/nginx/error.log
+```
+
+### Static files returning 403
+
+Double-check permissions on the staticfiles directory and all parent directories.
+
+---
+
+## Summary
+
+You now have:
+
+- ✅ Docker installed and configured on your server
+- ✅ Django running in a container with Docker Compose
+- ✅ Nginx reverse proxy serving your API and static files
+- ✅ Automated deployments via GitHub Actions
+
+Docker makes this setup portable—you can replicate it on any server with the same commands. No more "works on my machine" problems.
+
+The initial setup takes time, but once it's running, deployments are a `git push` away. That's the payoff.
+
+---
+
+## What's Next
+
+I'm working on combining this with my Next.js deployment knowledge to run a **full-stack Next.js + Django application** on a single server. Frontend and backend in separate containers, talking to each other, with Nginx routing traffic. I'll document that journey once I've figured it out.

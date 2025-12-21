@@ -1,0 +1,386 @@
+---
+title: 'Deploy Next.js 14 to AWS EC2 with PM2 and Nginx'
+excerpt: 'A complete guide to self-hosting your Next.js application on an EC2 instance. Covers SSL setup, environment variables, and production optimization.'
+date: '2025-12-15'
+readTime: '12 min read'
+tags: ['Next.js', 'AWS', 'DevOps', 'Nginx']
+---
+
+# Deploy Next.js 14 to AWS EC2 with PM2 and Nginx
+
+It took me over a week to get this working.
+
+I'm not exaggerating. Days of SSH-ing into my instance, tweaking Nginx configs, wondering why nothing was loading. At one point, my app was working perfectly—then I stopped the instance overnight to save costs, and the next morning everything was broken. Turns out the public IP had changed. I spent hours debugging my DNS, my Nginx config, my firewall rules... only to discover I hadn't set up an Elastic IP. One checkbox in the AWS console would have saved me half a day.
+
+The kicker? Right after I finally got everything working—CI/CD pipeline, SSL, the whole thing—I discovered **AWS Amplify**. One click deploy. Automatic SSL. No server management. I almost threw my laptop out the window.
+
+But here's the thing: I learned _a lot_. I now understand reverse proxies, process management, Linux permissions, and how all these pieces fit together. That knowledge has made me a better developer, and it's come in handy for projects where Amplify or Vercel just won't cut it.
+
+So if you're here because you need to self-host—whether for cost, compliance, or control—this guide will save you the week I lost. Let's do it.
+
+---
+
+## Why Self-Host?
+
+Vercel makes deployment easy, but sometimes you need more control—custom configurations, cost optimization, or compliance requirements. This guide walks you through deploying Next.js to an EC2 instance with Nginx reverse proxy, PM2 process manager, and GitHub Actions for CI/CD.
+
+## Prerequisites
+
+- AWS account with EC2 access
+- Domain name (we'll use subdomains)
+- Basic terminal/SSH knowledge
+- A Next.js application ready to deploy
+
+---
+
+## Step 1: Launch and Configure EC2 Instance
+
+### Create the EC2 Instance
+
+1. Launch an EC2 instance (Ubuntu 22.04 LTS recommended)
+2. Choose instance type (t2.micro for testing, t2.small+ for production)
+3. Configure security group:
+   - SSH (22) - Your IP
+   - HTTP (80) - Anywhere
+   - HTTPS (443) - Anywhere
+
+### Set Up Elastic IP
+
+Assign an Elastic IP to your instance so the IP doesn't change on restart:
+
+```bash
+# In AWS Console: EC2 → Elastic IPs → Allocate → Associate with instance
+```
+
+> ⚠️ Elastic IPs are free while associated with a running instance, but you'll be charged if the instance is stopped.
+
+### SSH Into Your Instance
+
+```bash
+ssh -i your-key.pem ubuntu@your-elastic-ip
+```
+
+---
+
+## Step 2: Enable Password Authentication (Optional)
+
+AWS uses key-based auth by default. If you prefer password login for convenience:
+
+```bash
+# Edit SSH config
+sudo nano /etc/ssh/sshd_config
+```
+
+Find and modify these lines:
+
+```bash
+PasswordAuthentication yes
+ChallengeResponseAuthentication yes
+```
+
+Then set a password and restart SSH:
+
+```bash
+sudo passwd ubuntu
+sudo systemctl restart sshd
+```
+
+---
+
+## Step 3: Install Node.js and PM2
+
+```bash
+# Install Node.js 20.x
+curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
+sudo apt-get install -y nodejs
+
+# Verify installation
+node --version
+npm --version
+
+# Install PM2 globally
+sudo npm install -g pm2
+```
+
+---
+
+## Step 4: Install and Configure Nginx
+
+### Install Nginx
+
+```bash
+sudo apt update
+sudo apt install nginx -y
+
+# Start and enable Nginx
+sudo systemctl start nginx
+sudo systemctl enable nginx
+```
+
+### Create Site Configuration
+
+Create a config file for your subdomain:
+
+```bash
+sudo nano /etc/nginx/sites-available/app.yourdomain.com
+```
+
+Add this configuration:
+
+```nginx showLineNumbers title="nginx.conf"
+server {
+    listen 80;
+    server_name app.yourdomain.com;
+
+    # Get real visitor IP from Cloudflare (if using Cloudflare)
+    real_ip_header CF-Connecting-IP;
+
+    location / {
+        proxy_pass http://localhost:3000;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_cache_bypass $http_upgrade;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+}
+```
+
+### Enable the Site
+
+```bash
+# Create symlink to sites-enabled
+sudo ln -s /etc/nginx/sites-available/app.yourdomain.com /etc/nginx/sites-enabled/
+
+# Test configuration
+sudo nginx -t
+
+# Reload Nginx
+sudo systemctl reload nginx
+```
+
+---
+
+## Step 5: Set Up Project Directory
+
+Create the directory where your app will live:
+
+```bash
+# Create directory for your subdomain
+sudo mkdir -p /var/www/app.yourdomain.com
+
+# Set ownership to your user
+sudo chown -R $USER:$USER /var/www/app.yourdomain.com
+
+# Set permissions
+sudo chmod -R 755 /var/www/app.yourdomain.com
+```
+
+> 💡 Everything in `/var/www/` requires `sudo` to modify by default. Setting ownership to your user simplifies deployments.
+
+---
+
+## Step 6: Configure SSH Keys for GitHub Actions
+
+### On Your Local Machine
+
+Generate a deploy key:
+
+```bash
+ssh-keygen -t ed25519 -C "github-actions-deploy" -f ~/.ssh/deploy_key
+```
+
+### Copy Public Key to VPS
+
+```bash
+# Copy the public key content
+cat ~/.ssh/deploy_key.pub
+
+# On your VPS, add to authorized_keys
+echo "your-public-key-content" >> ~/.ssh/authorized_keys
+```
+
+### Add Private Key to GitHub
+
+1. Go to your repo → Settings → Secrets and variables → Actions
+2. Create a new secret called `SSH_PRIVATE_KEY`
+3. Paste the contents of `~/.ssh/deploy_key`
+
+Also add these secrets:
+
+- `SSH_HOST`: Your Elastic IP
+- `SSH_USER`: `ubuntu`
+
+---
+
+## Step 7: Create GitHub Actions Workflow
+
+Create `.github/workflows/deploy.yml`:
+
+```yaml showLineNumbers title=".github/workflows/deploy.yml"
+name: Deploy to EC2
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build application
+        run: npm run build
+
+      - name: Deploy to EC2
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            cd /var/www/app.yourdomain.com
+            git pull origin main
+            npm ci --production
+            npm run build
+            pm2 restart my-nextjs-app || pm2 start npm --name "my-nextjs-app" -- start
+```
+
+---
+
+## Step 8: First Deployment
+
+### Clone Your Repo on the VPS
+
+```bash
+cd /var/www/app.yourdomain.com
+git clone https://github.com/yourusername/your-repo.git .
+```
+
+### Install Dependencies and Build
+
+```bash
+npm ci
+npm run build
+```
+
+### Start with PM2
+
+```bash
+pm2 start npm --name "my-nextjs-app" -- start
+pm2 save
+pm2 startup
+```
+
+---
+
+## Step 9: Configure DNS
+
+In your domain registrar or Cloudflare:
+
+1. Add an A record:
+   - Name: `app` (or your subdomain)
+   - Value: Your Elastic IP
+   - TTL: Auto
+
+If using Cloudflare, enable the proxy (orange cloud) for DDoS protection and caching.
+
+---
+
+## Step 10: SSL with Certbot (Optional if not using Cloudflare)
+
+If you're not using Cloudflare's SSL:
+
+```bash
+sudo apt install certbot python3-certbot-nginx -y
+sudo certbot --nginx -d app.yourdomain.com
+```
+
+---
+
+## Multiple Subdomains
+
+For additional apps, repeat the process with different ports:
+
+```nginx
+# /etc/nginx/sites-available/api.yourdomain.com
+server {
+    listen 80;
+    server_name api.yourdomain.com;
+
+    location / {
+        proxy_pass http://localhost:3001;  # Different port
+        # ... same proxy settings
+    }
+}
+```
+
+Start each app on its own port:
+
+```bash
+PORT=3001 pm2 start npm --name "my-api" -- start
+```
+
+---
+
+## Troubleshooting
+
+### Check if your app is running
+
+```bash
+pm2 status
+pm2 logs my-nextjs-app
+```
+
+### Test Nginx configuration
+
+```bash
+sudo nginx -t
+sudo systemctl status nginx
+```
+
+### Check if port is in use
+
+```bash
+sudo lsof -i :3000
+```
+
+---
+
+## Summary
+
+You now have:
+
+- ✅ EC2 instance with Node.js and PM2
+- ✅ Nginx reverse proxy for your subdomain
+- ✅ Automated deployments via GitHub Actions
+- ✅ Process management with PM2
+
+This setup gives you full control over your infrastructure while maintaining a smooth deployment workflow. The same pattern works for multiple Next.js apps—just assign different ports and create new Nginx configs.
+
+Was it worth the week of pain? Honestly, yes. I understand infrastructure now in a way I never did before. And when Amplify or Vercel can't do what I need, I know exactly how to spin up my own solution.
+
+That said—if you don't _need_ this level of control, save yourself the headache. AWS Amplify, Vercel, Railway, Render... they exist for a reason. Use them.
+
+But if you made it this far and got your app running on EC2, congrats. You've leveled up.
+
+---
+
+## What's Next
+
+I'm currently exploring **deploying Next.js with Docker**—a more portable and reproducible approach that eliminates PM2 entirely. Docker handles process management, makes your app environment-agnostic, and simplifies scaling. I'll share what I learn once I've got it working in production.

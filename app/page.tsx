@@ -83,7 +83,6 @@ const skills = [
 	'CSS3',
 	'Git',
 	'REST APIs',
-	'GraphQL',
 	'Responsive Design',
 	'Web Performance',
 	'Django',
@@ -247,7 +246,7 @@ export default function Home() {
 			<section className='py-24 px-4 md:px-40 text-center'>
 				<div className='max-w-2xl mx-auto'>
 					<h2 className='text-3xl md:text-4xl font-[family-name:var(--font-newsreader)] font-light mb-6'>
-						Let’s Build Something Great
+						Let&apos;s Build Something Great
 					</h2>
 					<p className='opacity-80 mb-8'>
 						Looking for a frontend developer who ships fast and sweats the details? I’m available for new projects.
