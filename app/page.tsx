@@ -15,6 +15,14 @@ interface Project {
 }
 const projects: Project[] = [
 	{
+		title: 'POS System',
+		description:
+			'A modern point-of-sale application with inventory management, real-time sales tracking, and seamless payment processing for retail businesses.',
+		tech: 'Next.js, TypeScript, Django, Zustand',
+		image: '/pos_main.png',
+		link: 'https://pos-testing.cyrilyamoah.com',
+	},
+	{
 		title: 'Industry Professionals',
 		description: 'A website to connect with industry professionals and learn from their experiences.',
 		tech: 'Nextjs, Typescript, Material UI, Redux',
@@ -43,21 +51,22 @@ const experience = [
 	{
 		position: 'Frontend Developer',
 		company: 'Jotella Media Group',
-		date: '2022–Present',
+		date: 'March 2022-Present',
 		highlights: [
-			'Built and maintained 3 production web apps serving 10K+ users',
-			'Reduced page load times by 40% through code splitting and lazy loading',
-			'Led migration from JavaScript to TypeScript across all projects',
+			'Developed high-performance responsive interfaces for real estate applications connecting agents to clients',
+			'Implemented interactive features including property search filters, map views, and image galleries',
+			'Optimized applications for SEO and performance while implementing secure authentication systems',
+			'Conducted code reviews and refactored codebase to address performance bottlenecks and improve maintainability',
 		],
 	},
 	{
 		position: 'Frontend Developer',
 		company: 'Infoview Data Solutions',
-		date: '2021–2022',
+		date: 'June 2021-March 2022',
 		highlights: [
-			'Developed responsive dashboards for real estate analytics',
-			'Integrated RESTful APIs and implemented Redux state management',
-			'Collaborated with UI/UX team to implement pixel-perfect designs',
+			'Built responsive web application for school management system complementing existing mobile app',
+			'Integrated backend APIs to display real-time data including student records, class schedules, and academic resources',
+			'Implemented authentication and authorization mechanisms based on roles and permissions',
 		],
 	},
 ];
@@ -77,8 +86,7 @@ const skills = [
 	'GraphQL',
 	'Responsive Design',
 	'Web Performance',
-	'Accessibility',
-	'Figma',
+	'Django',
 ];
 
 const contactLinks = [
