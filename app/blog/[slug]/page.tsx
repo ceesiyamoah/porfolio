@@ -113,7 +113,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 							lessons learned from real projects.
 						</p>
 						<Link
-							href='mailto:ccyamoah@gmail.com'
+							href='mailto:info@cyrilyamoah.com'
 							className='inline-flex items-center gap-2 text-[var(--accent)] hover:opacity-70 transition-opacity text-sm font-medium'
 						>
 							<span>Get in touch</span>
@@ -145,7 +145,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 								</Link>
 							</li>
 							<li>
-								<Link href='mailto:ccyamoah@gmail.com' className='hover:text-[var(--accent)] transition-colors'>
+								<Link href='mailto:info@cyrilyamoah.com' className='hover:text-[var(--accent)] transition-colors'>
 									Contact
 								</Link>
 							</li>

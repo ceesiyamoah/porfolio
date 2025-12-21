@@ -90,7 +90,7 @@ const skills = [
 
 const contactLinks = [
 	{
-		url: 'mailto:ccyamoah@gmail.com',
+		url: 'mailto:info@cyrilyamoah.com',
 		icon: <Gmail />,
 	},
 	{
@@ -125,7 +125,7 @@ export default function Home() {
 						},
 						description:
 							'Expert Frontend Developer specializing in React, Next.js, and TypeScript with 3+ years of experience building scalable web applications.',
-						email: 'ccyamoah@gmail.com',
+						email: 'info@cyrilyamoah.com',
 						sameAs: ['https://github.com/ceesiyamoah', 'https://www.linkedin.com/in/cyril-yamoah/'],
 						knowsAbout: [
 							'React.js',
@@ -252,7 +252,7 @@ export default function Home() {
 						Looking for a frontend developer who ships fast and sweats the details? I’m available for new projects.
 					</p>
 					<Link
-						href='mailto:ccyamoah@gmail.com'
+						href='mailto:info@cyrilyamoah.com'
 						className='inline-block px-8 py-4 bg-[var(--accent)] text-[var(--background)] font-medium hover:bg-[var(--accent-dark)] transition-colors'
 					>
 						Get in Touch →
@@ -282,7 +282,7 @@ export default function Home() {
 								</Link>
 							</li>
 							<li>
-								<Link href='mailto:ccyamoah@gmail.com' className='hover:text-[var(--accent)] transition-colors'>
+								<Link href='mailto:info@cyrilyamoah.com' className='hover:text-[var(--accent)] transition-colors'>
 									Contact
 								</Link>
 							</li>
@@ -467,7 +467,7 @@ export const metadata: Metadata = {
 	classification: 'Web Development Portfolio',
 	metadataBase: new URL('https://portfolio.cyrilyamoah.com/'),
 	other: {
-		'og:email': 'ccyamoah@gmail.com',
+		'og:email': 'info@cyrilyamoah.com',
 		'og:locality': 'Remote',
 		'og:region': 'Global',
 		'og:country-name': 'Ghana',

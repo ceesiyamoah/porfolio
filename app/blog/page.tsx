@@ -117,7 +117,7 @@ export default function BlogPage() {
 						I write about what I build. If you need a developer who documents and delivers, let&apos;s talk.
 					</p>
 					<Link
-						href='mailto:ccyamoah@gmail.com'
+						href='mailto:info@cyrilyamoah.com'
 						className='inline-block px-8 py-4 bg-[var(--accent)] text-[var(--background)] font-medium hover:bg-[var(--accent-dark)] transition-colors'
 					>
 						Get in Touch →
@@ -147,7 +147,7 @@ export default function BlogPage() {
 								</Link>
 							</li>
 							<li>
-								<Link href='mailto:ccyamoah@gmail.com' className='hover:text-[var(--accent)] transition-colors'>
+								<Link href='mailto:info@cyrilyamoah.com' className='hover:text-[var(--accent)] transition-colors'>
 									Contact
 								</Link>
 							</li>
