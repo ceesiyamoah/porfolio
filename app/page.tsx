@@ -116,8 +116,8 @@ export default function Home() {
 						'@context': 'https://schema.org',
 						'@type': 'Person',
 						name: 'Cyril Yamoah',
-						url: 'https://portfolio.cyrilyamoah.com',
-						image: 'https://portfolio.cyrilyamoah.com/logo.png',
+						url: 'https://cyrilyamoah.com',
+						image: 'https://cyrilyamoah.com/logo.png',
 						jobTitle: 'Frontend Developer',
 						worksFor: {
 							'@type': 'Organization',
@@ -392,7 +392,7 @@ export const metadata: Metadata = {
 		'remote web developer',
 		'freelance developer for hire',
 	],
-	authors: [{ name: 'Cyril Yamoah', url: 'https://portfolio.cyrilyamoah.com' }],
+	authors: [{ name: 'Cyril Yamoah', url: 'https://cyrilyamoah.com' }],
 	creator: 'Cyril Yamoah',
 	publisher: 'Cyril Yamoah',
 	formatDetection: {
@@ -422,7 +422,7 @@ export const metadata: Metadata = {
 	openGraph: {
 		type: 'website',
 		locale: 'en_US',
-		url: 'https://portfolio.cyrilyamoah.com',
+		url: 'https://cyrilyamoah.com',
 		siteName: 'Cyril Yamoah — Web Developer',
 		title: 'Cyril Yamoah — Web Developer for Startups & Growing Businesses',
 		description: `I build fast, modern websites that help businesses grow. From real estate platforms to SaaS dashboards—see my work and let's talk about your next project.`,
@@ -458,14 +458,14 @@ export const metadata: Metadata = {
 		},
 	},
 	alternates: {
-		canonical: 'https://portfolio.cyrilyamoah.com',
+		canonical: 'https://cyrilyamoah.com',
 	},
 	verification: {
 		google: 'KwN1HnFyo_kPeFkSozTVQ3qUsVLC033RLyrt-2fIFMI',
 	},
 	category: 'Technology',
 	classification: 'Web Development Portfolio',
-	metadataBase: new URL('https://portfolio.cyrilyamoah.com/'),
+	metadataBase: new URL('https://cyrilyamoah.com/'),
 	other: {
 		'og:email': 'info@cyrilyamoah.com',
 		'og:locality': 'Remote',

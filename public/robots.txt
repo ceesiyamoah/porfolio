@@ -3,4 +3,4 @@ User-agent: *
 Allow: /
 
 # Sitemap location
-Sitemap: https://portfolio.cyrilyamoah.com/sitemap.xml
+Sitemap: https://cyrilyamoah.com/sitemap.xml

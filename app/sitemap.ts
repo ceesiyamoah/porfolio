@@ -2,7 +2,7 @@ import { MetadataRoute } from 'next';
 import { getAllPosts } from '@/lib/blog';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-	const baseUrl = 'https://portfolio.cyrilyamoah.com';
+	const baseUrl = 'https://cyrilyamoah.com';
 	const currentDate = new Date();
 
 	// Get all blog posts

@@ -26,11 +26,11 @@ export default function BlogPage() {
 						'@type': 'Blog',
 						name: 'Cyril Yamoah Developer Blog',
 						description: 'Technical articles on web development, deployment, React, Next.js, Django, and DevOps.',
-						url: 'https://portfolio.cyrilyamoah.com/blog',
+						url: 'https://cyrilyamoah.com/blog',
 						author: {
 							'@type': 'Person',
 							name: 'Cyril Yamoah',
-							url: 'https://portfolio.cyrilyamoah.com',
+							url: 'https://cyrilyamoah.com',
 						},
 						blogPost: blogPosts.map((post: BlogPostMeta) => ({
 							'@type': 'BlogPosting',
@@ -41,7 +41,7 @@ export default function BlogPage() {
 								'@type': 'Person',
 								name: 'Cyril Yamoah',
 							},
-							url: `https://portfolio.cyrilyamoah.com/blog/${post.slug}`,
+							url: `https://cyrilyamoah.com/blog/${post.slug}`,
 						})),
 					}),
 				}}
@@ -177,7 +177,7 @@ export const metadata: Metadata = {
 	openGraph: {
 		type: 'website',
 		locale: 'en_US',
-		url: 'https://portfolio.cyrilyamoah.com/blog',
+		url: 'https://cyrilyamoah.com/blog',
 		siteName: 'Cyril Yamoah — Web Developer',
 		title: 'Blog — Cyril Yamoah | Web Development & Deployment Guides',
 		description: 'Technical articles on deploying Next.js, Django, Docker, and building production web applications.',
@@ -199,6 +199,6 @@ export const metadata: Metadata = {
 		images: ['/logo.png'],
 	},
 	alternates: {
-		canonical: 'https://portfolio.cyrilyamoah.com/blog',
+		canonical: 'https://cyrilyamoah.com/blog',
 	},
 };

@@ -43,13 +43,13 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 						author: {
 							'@type': 'Person',
 							name: 'Cyril Yamoah',
-							url: 'https://portfolio.cyrilyamoah.com',
+							url: 'https://cyrilyamoah.com',
 						},
 						publisher: {
 							'@type': 'Person',
 							name: 'Cyril Yamoah',
 						},
-						url: `https://portfolio.cyrilyamoah.com/blog/${slug}`,
+						url: `https://cyrilyamoah.com/blog/${slug}`,
 						keywords: post.tags.join(', '),
 					}),
 				}}
@@ -179,7 +179,7 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
 		openGraph: {
 			type: 'article',
 			locale: 'en_US',
-			url: `https://portfolio.cyrilyamoah.com/blog/${slug}`,
+			url: `https://cyrilyamoah.com/blog/${slug}`,
 			siteName: 'Cyril Yamoah — Web Developer',
 			title: post.title,
 			description: post.excerpt,
@@ -203,7 +203,7 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
 			images: ['/logo.png'],
 		},
 		alternates: {
-			canonical: `https://portfolio.cyrilyamoah.com/blog/${slug}`,
+			canonical: `https://cyrilyamoah.com/blog/${slug}`,
 		},
 	};
 }
