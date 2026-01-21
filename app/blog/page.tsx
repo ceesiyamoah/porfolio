@@ -1,4 +1,5 @@
 import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer';
 import { getAllPosts, BlogPostMeta } from '@/lib/blog';
 import { Metadata } from 'next';
 import Link from 'next/link';
@@ -68,16 +69,16 @@ export default function BlogPage() {
 					{blogPosts.map((post, idx) => (
 						<article key={post.slug} className='group animate-fade-in-up' style={{ animationDelay: `${idx * 100}ms` }}>
 							<Link href={`/blog/${post.slug}`} className='block'>
-								<div className='p-6 md:p-8 bg-[var(--card-bg)] border border-[var(--muted)] hover:border-[var(--accent)] transition-all duration-300 hover:shadow-lg hover:shadow-[var(--accent)]/10 hover:-translate-y-1'>
+								<div className='p-6 md:p-8 bg-card-bg border border-muted hover:border-accent transition-all duration-300 hover:shadow-lg hover:shadow-accent/10 hover:-translate-y-1'>
 									<div className='flex flex-wrap items-center gap-3 mb-4'>
-										<time className='text-sm text-[var(--accent)]' dateTime={post.date}>
+										<time className='text-sm text-accent' dateTime={post.date}>
 											{formatDate(post.date)}
 										</time>
-										<span className='text-[var(--muted)]'>•</span>
+										<span className='text-muted'>•</span>
 										<span className='text-sm opacity-60'>{post.readTime}</span>
 									</div>
 
-									<h2 className='text-xl md:text-2xl font-semibold font-[family-name:var(--font-bricolage)] mb-3 group-hover:text-[var(--accent)] transition-colors'>
+									<h2 className='text-xl md:text-2xl font-semibold font-[family-name:var(--font-bricolage)] mb-3 group-hover:text-accent transition-colors'>
 										{post.title}
 									</h2>
 
@@ -87,14 +88,14 @@ export default function BlogPage() {
 										{post.tags.map((tag) => (
 											<span
 												key={tag}
-												className='text-xs px-3 py-1 bg-[var(--background)] text-[var(--accent)] border border-[var(--muted)]'
+												className='text-xs px-3 py-1 bg-background text-accent border border-muted'
 											>
 												{tag}
 											</span>
 										))}
 									</div>
 
-									<div className='mt-4 inline-flex items-center gap-2 text-[var(--accent)] text-sm font-medium'>
+									<div className='mt-4 inline-flex items-center gap-2 text-accent text-sm font-medium'>
 										<span>Read article</span>
 										<span aria-hidden='true' className='group-hover:translate-x-1 transition-transform'>
 											→
@@ -108,7 +109,7 @@ export default function BlogPage() {
 			</section>
 
 			{/* CTA Section */}
-			<section className='py-24 px-4 md:px-40 text-center border-t border-[var(--muted)]'>
+			<section className='py-24 px-4 md:px-40 text-center border-t border-muted'>
 				<div className='max-w-2xl mx-auto'>
 					<h2 className='text-3xl md:text-4xl font-[family-name:var(--font-newsreader)] font-light mb-6'>
 						Want to Work Together?
@@ -118,7 +119,7 @@ export default function BlogPage() {
 					</p>
 					<Link
 						href='mailto:info@cyrilyamoah.com'
-						className='inline-block px-8 py-4 bg-[var(--accent)] text-[var(--background)] font-medium hover:bg-[var(--accent-dark)] transition-colors'
+						className='inline-block px-8 py-4 bg-accent text-background font-medium hover:bg-accent-dark transition-colors'
 					>
 						Get in Touch →
 					</Link>
@@ -126,35 +127,7 @@ export default function BlogPage() {
 			</section>
 
 			{/* Footer */}
-			<footer className='py-12 px-4 md:px-40 border-t border-[var(--muted)]'>
-				<div className='flex flex-col md:flex-row justify-between items-start md:items-center gap-4'>
-					<p className='text-sm opacity-60'>&copy; {new Date().getFullYear()} Cyril Yamoah. All rights reserved.</p>
-					<nav aria-label='Footer navigation'>
-						<ul className='flex gap-6 text-sm'>
-							<li>
-								<Link href='/#about' className='hover:text-[var(--accent)] transition-colors'>
-									About
-								</Link>
-							</li>
-							<li>
-								<Link href='/#projects' className='hover:text-[var(--accent)] transition-colors'>
-									Projects
-								</Link>
-							</li>
-							<li>
-								<Link href='/blog' className='text-[var(--accent)]'>
-									Blog
-								</Link>
-							</li>
-							<li>
-								<Link href='mailto:info@cyrilyamoah.com' className='hover:text-[var(--accent)] transition-colors'>
-									Contact
-								</Link>
-							</li>
-						</ul>
-					</nav>
-				</div>
-			</footer>
+			<Footer currentPage='blog' />
 		</div>
 	);
 }

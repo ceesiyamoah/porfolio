@@ -1,4 +1,5 @@
 import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer';
 import MDXContent from '@/components/MDXContent';
 import { getPostBySlug, getAllSlugs } from '@/lib/blog';
 import { Metadata } from 'next';
@@ -56,21 +57,21 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 			/>
 
 			{/* Article Header */}
-			<header className='py-16 md:py-24 px-4 md:px-40 border-b border-[var(--muted)]'>
+			<header className='py-16 md:py-24 px-4 md:px-40 border-b border-muted'>
 				<div className='max-w-3xl'>
 					<Link
 						href='/blog'
-						className='inline-flex items-center gap-2 text-[var(--accent)] hover:opacity-70 transition-opacity mb-8 text-sm'
+						className='inline-flex items-center gap-2 text-accent hover:opacity-70 transition-opacity mb-8 text-sm'
 					>
 						<span>←</span>
 						<span>Back to Blog</span>
 					</Link>
 
 					<div className='flex flex-wrap items-center gap-3 mb-6'>
-						<time className='text-sm text-[var(--accent)]' dateTime={post.date}>
+						<time className='text-sm text-accent' dateTime={post.date}>
 							{formatDate(post.date)}
 						</time>
-						<span className='text-[var(--muted)]'>•</span>
+						<span className='text-muted'>•</span>
 						<span className='text-sm opacity-60'>{post.readTime}</span>
 					</div>
 
@@ -86,7 +87,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 						{post.tags.map((tag) => (
 							<span
 								key={tag}
-								className='text-xs px-3 py-1 bg-[var(--card-bg)] text-[var(--accent)] border border-[var(--muted)]'
+								className='text-xs px-3 py-1 bg-card-bg text-accent border border-muted'
 							>
 								{tag}
 							</span>
@@ -103,10 +104,10 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 			</main>
 
 			{/* Author Section */}
-			<section className='py-12 px-4 md:px-40 border-t border-[var(--muted)]'>
+			<section className='py-12 px-4 md:px-40 border-t border-muted'>
 				<div className='max-w-3xl'>
-					<div className='bg-[var(--card-bg)] border border-[var(--muted)] p-6 md:p-8'>
-						<p className='text-sm text-[var(--accent)] mb-2'>Written by</p>
+					<div className='bg-card-bg border border-muted p-6 md:p-8'>
+						<p className='text-sm text-accent mb-2'>Written by</p>
 						<h3 className='text-xl font-semibold font-[family-name:var(--font-bricolage)] mb-2'>Cyril Yamoah</h3>
 						<p className='opacity-80 mb-4'>
 							Software Developer building production web applications. I write about deployment, performance, and
@@ -114,7 +115,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 						</p>
 						<Link
 							href='mailto:info@cyrilyamoah.com'
-							className='inline-flex items-center gap-2 text-[var(--accent)] hover:opacity-70 transition-opacity text-sm font-medium'
+							className='inline-flex items-center gap-2 text-accent hover:opacity-70 transition-opacity text-sm font-medium'
 						>
 							<span>Get in touch</span>
 							<span>→</span>
@@ -124,35 +125,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 			</section>
 
 			{/* Footer */}
-			<footer className='py-12 px-4 md:px-40 border-t border-[var(--muted)]'>
-				<div className='flex flex-col md:flex-row justify-between items-start md:items-center gap-4'>
-					<p className='text-sm opacity-60'>&copy; {new Date().getFullYear()} Cyril Yamoah. All rights reserved.</p>
-					<nav aria-label='Footer navigation'>
-						<ul className='flex gap-6 text-sm'>
-							<li>
-								<Link href='/#about' className='hover:text-[var(--accent)] transition-colors'>
-									About
-								</Link>
-							</li>
-							<li>
-								<Link href='/#projects' className='hover:text-[var(--accent)] transition-colors'>
-									Projects
-								</Link>
-							</li>
-							<li>
-								<Link href='/blog' className='text-[var(--accent)]'>
-									Blog
-								</Link>
-							</li>
-							<li>
-								<Link href='mailto:info@cyrilyamoah.com' className='hover:text-[var(--accent)] transition-colors'>
-									Contact
-								</Link>
-							</li>
-						</ul>
-					</nav>
-				</div>
-			</footer>
+			<Footer currentPage='blog' />
 		</div>
 	);
 }

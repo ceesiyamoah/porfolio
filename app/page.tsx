@@ -1,4 +1,5 @@
 import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer';
 import Github from '@/components/SVG/Github';
 import Gmail from '@/components/SVG/Gmail';
 import Linkedin from '@/components/SVG/Linkedin';
@@ -151,18 +152,18 @@ export default function Home() {
 						Cyril Yamoah
 					</h1>
 					<h2
-						className='text-xl md:text-2xl text-[var(--accent)] mb-8 font-medium animate-fade-in-up'
+						className='text-xl md:text-2xl text-accent mb-8 font-medium animate-fade-in-up'
 						style={{ animationDelay: '100ms' }}
 					>
-						I build websites that convert visitors into customers.
+						Frontend Developer specializing in React, Next.js, and TypeScript.
 					</h2>
 					<p
 						className='text-lg md:text-xl leading-relaxed mb-12 opacity-80 max-w-2xl animate-fade-in-up'
 						style={{ animationDelay: '200ms' }}
 					>
-						Your users expect fast, polished experiences. I create them—websites and apps that load instantly, work
-						flawlessly, and help your business grow. From real estate platforms to SaaS dashboards, I&apos;ve shipped
-						products that real people use every day.
+						I build production-ready web applications—from real estate CRMs handling thousands of listings to
+						point-of-sale systems processing daily transactions. My focus is on performance, clean code, and
+						interfaces that users actually enjoy using.
 					</p>
 					<div className='flex gap-6 animate-fade-in-up' style={{ animationDelay: '300ms' }}>
 						{contactLinks.map((link) => (
@@ -206,16 +207,16 @@ export default function Home() {
 					{experience.map((exp, idx) => (
 						<article
 							key={exp.company}
-							className='border-l-2 border-[var(--accent)] pl-6 animate-fade-in-up'
+							className='border-l-2 border-accent pl-6 animate-fade-in-up'
 							style={{ animationDelay: `${idx * 100}ms` }}
 						>
 							<h3 className='text-xl font-semibold mb-1'>{exp.position}</h3>
-							<p className='text-[var(--accent)] mb-2'>{exp.company}</p>
+							<p className='text-accent mb-2'>{exp.company}</p>
 							<time className='text-sm opacity-60 block mb-3'>{exp.date}</time>
 							<ul className='space-y-2'>
 								{exp.highlights.map((highlight) => (
 									<li key={highlight} className='text-sm opacity-80 flex gap-2'>
-										<span className='text-[var(--accent)]'>→</span>
+										<span className='text-accent'>→</span>
 										{highlight}
 									</li>
 								))}
@@ -232,7 +233,7 @@ export default function Home() {
 					{skills.map((skill, idx) => (
 						<span
 							key={skill}
-							className='px-4 py-2 bg-[var(--card-bg)] border border-[var(--muted)] text-sm hover:border-[var(--accent)] transition-colors cursor-default animate-fade-in-up'
+							className='px-4 py-2 bg-card-bg border border-muted text-sm hover:border-accent transition-colors cursor-default animate-fade-in-up'
 							role='listitem'
 							style={{ animationDelay: `${idx * 50}ms` }}
 						>
@@ -253,7 +254,7 @@ export default function Home() {
 					</p>
 					<Link
 						href='mailto:info@cyrilyamoah.com'
-						className='inline-block px-8 py-4 bg-[var(--accent)] text-[var(--background)] font-medium hover:bg-[var(--accent-dark)] transition-colors'
+						className='inline-block px-8 py-4 bg-accent text-background font-medium hover:bg-accent-dark transition-colors'
 					>
 						Get in Touch →
 					</Link>
@@ -261,35 +262,7 @@ export default function Home() {
 			</section>
 
 			{/* Footer */}
-			<footer className='py-12 px-4 md:px-40 border-t border-[var(--muted)]' id='contact'>
-				<div className='flex flex-col md:flex-row justify-between items-start md:items-center gap-4'>
-					<p className='text-sm opacity-60'>&copy; {new Date().getFullYear()} Cyril Yamoah. All rights reserved.</p>
-					<nav aria-label='Footer navigation'>
-						<ul className='flex gap-6 text-sm'>
-							<li>
-								<Link href='#about' className='hover:text-[var(--accent)] transition-colors'>
-									About
-								</Link>
-							</li>
-							<li>
-								<Link href='#projects' className='hover:text-[var(--accent)] transition-colors'>
-									Projects
-								</Link>
-							</li>
-							<li>
-								<Link href='#experience' className='hover:text-[var(--accent)] transition-colors'>
-									Experience
-								</Link>
-							</li>
-							<li>
-								<Link href='mailto:info@cyrilyamoah.com' className='hover:text-[var(--accent)] transition-colors'>
-									Contact
-								</Link>
-							</li>
-						</ul>
-					</nav>
-				</div>
-			</footer>
+			<Footer currentPage='home' />
 		</div>
 	);
 }
@@ -297,7 +270,7 @@ export default function Home() {
 const ProjectCard = (project: Project & { index: number }) => {
 	return (
 		<article
-			className='group bg-[var(--card-bg)] border border-[var(--muted)] overflow-hidden hover:border-[var(--accent)] transition-all duration-300 flex flex-col h-full hover:shadow-lg hover:shadow-[var(--accent)]/10 hover:-translate-y-1'
+			className='group bg-card-bg border border-muted overflow-hidden hover:border-accent transition-all duration-300 flex flex-col h-full hover:shadow-lg hover:shadow-accent/10 hover:-translate-y-1'
 			itemScope
 			itemType='https://schema.org/CreativeWork'
 		>
@@ -323,7 +296,7 @@ const ProjectCard = (project: Project & { index: number }) => {
 					{project.tech.split(', ').map((tech) => (
 						<span
 							key={tech}
-							className='text-xs px-2 py-1 bg-[var(--background)] text-[var(--accent)]'
+							className='text-xs px-2 py-1 bg-background text-accent'
 							itemProp='keywords'
 						>
 							{tech}
@@ -334,7 +307,7 @@ const ProjectCard = (project: Project & { index: number }) => {
 					href={project.link}
 					target='_blank'
 					rel='noopener noreferrer'
-					className='inline-flex items-center gap-2 text-[var(--accent)] hover:text-[var(--foreground)] transition-colors text-sm font-medium mt-auto'
+					className='inline-flex items-center gap-2 text-accent hover:text-foreground transition-colors text-sm font-medium mt-auto'
 					aria-label={`View ${project.title} project live demo`}
 					itemProp='url'
 				>
@@ -350,47 +323,18 @@ export const metadata: Metadata = {
 	title: 'Cyril Yamoah — Web Developer for Startups & Growing Businesses',
 	description: `I build fast, modern websites that help businesses grow. Specializing in React and Next.js development for startups, real estate companies, and SaaS products. View my work and let's talk about your project.`,
 	keywords: [
-		// Brand
 		'Cyril Yamoah',
-		'Cyril Yamoah developer',
-		'Cyril Yamoah portfolio',
-
-		// Business-Focused Services
-		'website developer for startups',
-		'web developer for small business',
-		'hire web developer',
-		'freelance website developer',
-		'custom website development',
-		'professional website builder',
-		'business website developer',
-		'website redesign services',
-
-		// Industry Solutions
-		'real estate website developer',
-		'SaaS website development',
-		'startup web developer',
-		'e-commerce website builder',
-		'company website development',
-		'landing page developer',
-		'web app development services',
-
-		// Outcome-Focused
-		'fast loading websites',
-		'mobile-friendly website',
-		'SEO-optimized websites',
-		'conversion-focused web design',
-		'modern website design',
-		'responsive website development',
-
-		// Technical (minimal, for developer searches)
+		'frontend developer',
 		'React developer',
 		'Next.js developer',
-		'frontend developer',
-		'JavaScript developer',
-
-		// Location & Work Style
-		'remote web developer',
-		'freelance developer for hire',
+		'TypeScript developer',
+		'web developer Ghana',
+		'real estate web applications',
+		'SaaS development',
+		'responsive web design',
+		'freelance developer',
+		'full-stack JavaScript',
+		'Django developer',
 	],
 	authors: [{ name: 'Cyril Yamoah', url: 'https://cyrilyamoah.com' }],
 	creator: 'Cyril Yamoah',

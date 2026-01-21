@@ -11,6 +11,10 @@ export default {
 			colors: {
 				background: 'var(--background)',
 				foreground: 'var(--foreground)',
+				accent: 'var(--accent)',
+				'accent-dark': 'var(--accent-dark)',
+				muted: 'var(--muted)',
+				'card-bg': 'var(--card-bg)',
 			},
 			boxShadow: {
 				light: '0 4px 6px rgba(255, 255, 255, 0.1)',

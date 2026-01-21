@@ -42,7 +42,7 @@ const MobileNavbar = () => {
 			{mobileMenuOpen && (
 				<nav
 					id='home'
-					className='absolute right-0 top-[73px] w-2/3 border border-t-0 border-[var(--muted)] rounded-bl-lg shadow-lg md:hidden z-10 bg-[var(--background)]'
+					className='absolute right-0 top-[73px] w-2/3 border border-t-0 border-muted rounded-bl-lg shadow-lg md:hidden z-10 bg-background'
 					ref={mobileMenuRef}
 				>
 					<div className='flex flex-col items-center gap-4 p-2 '>
