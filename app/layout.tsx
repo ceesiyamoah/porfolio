@@ -1,6 +1,11 @@
 import { Newsreader, IBM_Plex_Mono, Bricolage_Grotesque } from 'next/font/google';
 import './globals.css';
 import { ReactNode } from 'react';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+	metadataBase: new URL('https://cyrilyamoah.com'),
+};
 
 const newsreader = Newsreader({
 	variable: '--font-newsreader',
