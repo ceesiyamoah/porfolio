@@ -30,7 +30,7 @@ Cyril Yamoah is a Frontend Developer with 3+ years of experience building produc
 
 ## Skills
 
-React, Next.js, TypeScript, JavaScript, Django, Python, Tailwind CSS, Material UI, Redux, Zustand, React Query, REST APIs, Git, HTML5, CSS3, Responsive Design, Web Performance, SEO
+React, Next.js, TypeScript, JavaScript, Webpack Module Federation, Django, Python, PHP, Tailwind CSS, Material UI, Redux, Zustand, React Query, REST APIs, Git, HTML5, CSS3, Responsive Design, Web Performance, SEO
 `;
 
 export async function GET() {

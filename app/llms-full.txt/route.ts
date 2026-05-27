@@ -44,8 +44,19 @@ const projects = [
 const experience = [
 	{
 		position: 'Frontend Developer',
+		company: 'IT Consortium',
+		date: 'April 2025–Present',
+		highlights: [
+			'Develop and maintain features for client-facing SaaS products built on a React micro-frontend architecture using Webpack Module Federation',
+			'Improved frontend caching strategies across federated modules, reducing redundant network requests and improving perceived load times',
+			'Strengthened TypeScript type definitions across Module Federation host and remote boundaries, reducing runtime errors and improving developer confidence',
+			'Streamlined feature delivery workflows, contributing to faster time-to-market for new product releases',
+		],
+	},
+	{
+		position: 'Frontend Developer',
 		company: 'Jotella Media Group',
-		date: 'March 2022–Present',
+		date: 'March 2022–March 2025',
 		highlights: [
 			'Developed high-performance responsive interfaces for real estate applications connecting agents to clients',
 			'Implemented interactive features including property search filters, map views, and image galleries',
@@ -112,7 +123,7 @@ Cyril Yamoah is a Frontend Developer with 3+ years of experience building produc
 
 ## Skills
 
-React, Next.js, TypeScript, JavaScript, Django, Python, Tailwind CSS, Material UI, Redux, Zustand, React Query, REST APIs, Git, HTML5, CSS3, Responsive Design, Web Performance, SEO, Docker, AWS EC2, Nginx, PM2
+React, Next.js, TypeScript, JavaScript, Webpack Module Federation, Django, Python, PHP, Tailwind CSS, Material UI, Redux, Zustand, React Query, REST APIs, Git, HTML5, CSS3, Responsive Design, Web Performance, SEO, Docker, AWS EC2, Nginx, PM2
 
 ## Projects
 

@@ -59,8 +59,19 @@ const projects: Project[] = [
 const experience = [
 	{
 		position: 'Frontend Developer',
+		company: 'IT Consortium',
+		date: 'April 2025-Present',
+		highlights: [
+			'Develop and maintain features for client-facing SaaS products built on a React micro-frontend architecture using Webpack Module Federation',
+			'Improved frontend caching strategies across federated modules, reducing redundant network requests and improving perceived load times',
+			'Strengthened TypeScript type definitions across Module Federation host and remote boundaries, reducing runtime errors and improving developer confidence',
+			'Streamlined feature delivery workflows, contributing to faster time-to-market for new product releases',
+		],
+	},
+	{
+		position: 'Frontend Developer',
 		company: 'Jotella Media Group',
-		date: 'March 2022-Present',
+		date: 'March 2022-March 2025',
 		highlights: [
 			'Developed high-performance responsive interfaces for real estate applications connecting agents to clients',
 			'Implemented interactive features including property search filters, map views, and image galleries',
@@ -85,6 +96,7 @@ const skills = [
 	'Next.js',
 	'TypeScript',
 	'JavaScript',
+	'Module Federation',
 	'Redux',
 	'Tailwind CSS',
 	'Material UI',
@@ -95,6 +107,7 @@ const skills = [
 	'Responsive Design',
 	'Web Performance',
 	'Django',
+	'PHP',
 ];
 
 const contactLinks = [
@@ -131,7 +144,7 @@ export default function Home() {
 						jobTitle: 'Frontend Developer',
 						worksFor: {
 							'@type': 'Organization',
-							name: 'Jotella Media Group',
+							name: 'IT Consortium',
 						},
 						description:
 							'Expert Frontend Developer specializing in React, Next.js, and TypeScript with 3+ years of experience building scalable web applications.',
@@ -146,11 +159,13 @@ export default function Home() {
 							'Next.js',
 							'TypeScript',
 							'JavaScript',
+							'Webpack Module Federation',
 							'Redux',
 							'Tailwind CSS',
 							'Material UI',
 							'Django',
 							'Python',
+							'PHP',
 							'Web Development',
 							'Frontend Development',
 							'Responsive Design',
