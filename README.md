@@ -10,7 +10,6 @@ My personal portfolio website showcasing my work as a frontend developer. Built 
 - Smooth animations and transitions
 - Dark mode support
 - Accessibility compliant
-
 ## Tech Stack
 
 - **Framework**: Next.js 15 (App Router)
