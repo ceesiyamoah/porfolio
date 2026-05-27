@@ -5,26 +5,25 @@ export default function sitemap(): MetadataRoute.Sitemap {
 	const baseUrl = 'https://cyrilyamoah.com';
 	const currentDate = new Date();
 
-	// Get all blog posts
 	const posts = getAllPosts();
 	const blogUrls = posts.map((post) => ({
 		url: `${baseUrl}/blog/${post.slug}`,
 		lastModified: new Date(post.date),
 		changeFrequency: 'monthly' as const,
-		priority: 0.7,
+		priority: 0.6,
 	}));
 
 	return [
 		{
 			url: baseUrl,
 			lastModified: currentDate,
-			changeFrequency: 'weekly',
-			priority: 1,
+			changeFrequency: 'monthly' as const,
+			priority: 1.0,
 		},
 		{
 			url: `${baseUrl}/blog`,
 			lastModified: currentDate,
-			changeFrequency: 'weekly',
+			changeFrequency: 'weekly' as const,
 			priority: 0.8,
 		},
 		...blogUrls,

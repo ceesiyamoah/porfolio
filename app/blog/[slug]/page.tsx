@@ -30,7 +30,22 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 		<div className='size-full relative'>
 			<Navbar />
 
-			{/* Schema.org structured data */}
+			{/* BreadcrumbList schema */}
+			<script
+				type='application/ld+json'
+				dangerouslySetInnerHTML={{
+					__html: JSON.stringify({
+						'@context': 'https://schema.org',
+						'@type': 'BreadcrumbList',
+						itemListElement: [
+							{ '@type': 'ListItem', position: 1, name: 'Home', item: 'https://cyrilyamoah.com' },
+							{ '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://cyrilyamoah.com/blog' },
+							{ '@type': 'ListItem', position: 3, name: post.title, item: `https://cyrilyamoah.com/blog/${slug}` },
+						],
+					}),
+				}}
+			/>
+			{/* BlogPosting schema */}
 			<script
 				type='application/ld+json'
 				dangerouslySetInnerHTML={{

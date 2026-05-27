@@ -16,6 +16,14 @@ interface Project {
 }
 const projects: Project[] = [
 	{
+		title: 'Kendamil Ghana',
+		description:
+			'E-commerce platform for the official Ghanaian retailer of Kendamil British baby formula. Features a full product catalogue, cart, Paystack checkout, admin dashboard, and AI-assisted inventory management.',
+		tech: 'Next.js, TypeScript, Django, Python, Tailwind CSS, Zustand, React Query',
+		image: '/kendmil.png',
+		link: 'https://kendamilghana.com',
+	},
+	{
 		title: 'POS System',
 		description:
 			'A modern point-of-sale application with inventory management, real-time sales tracking, and seamless payment processing for retail businesses.',
@@ -109,13 +117,14 @@ export default function Home() {
 		<div className='size-full relative'>
 			<Navbar />
 
-			{/* Schema.org structured data */}
+			{/* Person schema */}
 			<script
 				type='application/ld+json'
 				dangerouslySetInnerHTML={{
 					__html: JSON.stringify({
 						'@context': 'https://schema.org',
 						'@type': 'Person',
+						'@id': 'https://cyrilyamoah.com#person',
 						name: 'Cyril Yamoah',
 						url: 'https://cyrilyamoah.com',
 						image: 'https://cyrilyamoah.com/logo.png',
@@ -127,7 +136,11 @@ export default function Home() {
 						description:
 							'Expert Frontend Developer specializing in React, Next.js, and TypeScript with 3+ years of experience building scalable web applications.',
 						email: 'info@cyrilyamoah.com',
-						sameAs: ['https://github.com/ceesiyamoah', 'https://www.linkedin.com/in/cyril-yamoah/'],
+						sameAs: [
+							'https://github.com/ceesiyamoah',
+							'https://www.linkedin.com/in/cyril-yamoah/',
+							'https://twitter.com/ceesiyamoah',
+						],
 						knowsAbout: [
 							'React.js',
 							'Next.js',
@@ -136,11 +149,51 @@ export default function Home() {
 							'Redux',
 							'Tailwind CSS',
 							'Material UI',
+							'Django',
+							'Python',
 							'Web Development',
 							'Frontend Development',
 							'Responsive Design',
 							'Web Performance',
 						],
+					}),
+				}}
+			/>
+			{/* WebSite schema */}
+			<script
+				type='application/ld+json'
+				dangerouslySetInnerHTML={{
+					__html: JSON.stringify({
+						'@context': 'https://schema.org',
+						'@type': 'WebSite',
+						'@id': 'https://cyrilyamoah.com#website',
+						url: 'https://cyrilyamoah.com',
+						name: 'Cyril Yamoah — Web Developer',
+						inLanguage: 'en-US',
+						author: { '@id': 'https://cyrilyamoah.com#person' },
+					}),
+				}}
+			/>
+			{/* Portfolio projects ItemList */}
+			<script
+				type='application/ld+json'
+				dangerouslySetInnerHTML={{
+					__html: JSON.stringify({
+						'@context': 'https://schema.org',
+						'@type': 'ItemList',
+						name: 'Portfolio Projects',
+						itemListElement: projects.map((project, i) => ({
+							'@type': 'ListItem',
+							position: i + 1,
+							item: {
+								'@type': 'CreativeWork',
+								name: project.title,
+								description: project.description,
+								url: project.link,
+								keywords: project.tech,
+								creator: { '@id': 'https://cyrilyamoah.com#person' },
+							},
+						})),
 					}),
 				}}
 			/>
